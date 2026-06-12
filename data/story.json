@@ -1,0 +1,83 @@
+[
+  {
+    "Id": "start",
+    "Text": "You wake up in a dark, cold room. The only light comes from a small crack in the door ahead.",
+    "Options": [
+      {
+        "Id": "open_door",
+        "Text": "Try to open the door",
+        "TargetSceneId": "hallway",
+        "StatChanges": {
+          "Bravery": 1
+        }
+      },
+      {
+        "Id": "search_room",
+        "Text": "Search the room in the dark",
+        "TargetSceneId": "dark_room_search",
+        "StatChanges": {
+          "Intelligence": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "hallway",
+    "Text": "The door creaks open, revealing a long hallway lined with portraits. At the end is a glowing red exit.",
+    "Options": [
+      {
+        "Id": "run_exit",
+        "Text": "Run towards the exit",
+        "TargetSceneId": "escape"
+      },
+      {
+        "Id": "look_portraits",
+        "Text": "Examine the portraits",
+        "TargetSceneId": "portraits",
+        "StatChanges": {
+          "Curiosity": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "dark_room_search",
+    "Text": "You fumble around and find a small key! But suddenly, you hear a growl...",
+    "Options": [
+      {
+        "Id": "fight",
+        "Text": "Brace yourself for a fight",
+        "TargetSceneId": "game_over",
+        "StatChanges": {
+          "Bravery": 5
+        }
+      },
+      {
+        "Id": "flee",
+        "Text": "Run out the door!",
+        "TargetSceneId": "hallway"
+      }
+    ]
+  },
+  {
+    "Id": "portraits",
+    "Text": "The portraits are all of people who look eerily similar to you. The eyes seem to follow you. You decide it's time to leave.",
+    "Options": [
+      {
+        "Id": "leave",
+        "Text": "Head to the exit",
+        "TargetSceneId": "escape"
+      }
+    ]
+  },
+  {
+    "Id": "escape",
+    "Text": "You push open the exit door and burst into the sunlight. You have escaped! You survived.",
+    "Options": []
+  },
+  {
+    "Id": "game_over",
+    "Text": "A monster jumps out from the shadows. You put up a good fight, but it's too much. The adventure ends here.",
+    "Options": []
+  }
+]

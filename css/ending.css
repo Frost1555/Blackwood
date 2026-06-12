@@ -1,0 +1,391 @@
+/* ===== FULLSCREEN ENDING SCREENS ===== */
+.ending-screen-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: none;
+  background: radial-gradient(circle at center, rgba(26, 26, 26, 0.98) 0%, rgba(10, 10, 10, 1) 100%);
+  z-index: 9999;
+  overflow-y: auto;
+  animation: endingReveal 1.5s ease-out;
+}
+
+@keyframes endingReveal {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.ending-glitch-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.03) 2px,
+    rgba(255, 255, 255, 0.03) 4px
+  );
+  pointer-events: none;
+  animation: scanlines 8s linear infinite;
+}
+
+@keyframes scanlines {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(10px); }
+}
+
+.ending-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 900px;
+  width: 100%;
+  padding: 20px;
+}
+
+.ending-game-title {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 0.5rem;
+  color: #444;
+  text-shadow: 0 0 5px rgba(139, 0, 0, 0.3);
+  margin-bottom: 30px;
+  animation: subtitlePulse 4s ease-in-out infinite;
+}
+
+.ending-icon {
+  font-size: 8rem;
+  margin-bottom: 20px;
+  animation: endingIconPulse 2s ease-in-out infinite;
+}
+
+@keyframes endingIconPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.ending-title {
+  font-size: 4rem;
+  font-weight: 900;
+  letter-spacing: 1.5rem;
+  margin-bottom: 30px;
+  position: relative;
+  display: inline-block;
+  animation: endingTitleGlitch 3s infinite;
+}
+
+.ending-title::before,
+.ending-title::after {
+  content: attr(data-text);
+  position: absolute;
+  left: -17px;
+  top: 0;
+  width: 105%;
+  height: 100%;
+}
+
+.ending-title::before {
+  animation: glitchTop 2s infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.ending-title::after {
+  animation: glitchBottom 2.5s infinite;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+@keyframes endingTitleGlitch {
+  0%, 96%, 100% {
+    transform: translate(0);
+  }
+  97% {
+    transform: translate(4px, -2px);
+  }
+  98% {
+    transform: translate(-2px, 3px);
+  }
+  99% {
+    transform: translate(3px, -1px);
+  }
+}
+
+.ending-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #d4d4d4;
+  margin: 20px auto;
+  text-align: left;
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 3px solid;
+  animation: textFadeIn 2s ease-out;
+  max-height: 35vh;
+  overflow-y: auto;
+}
+
+@keyframes textFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ending-stats h4 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  animation: none;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  max-height: 25vh;
+  overflow-y: auto;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background: rgba(0, 0, 0, 0.4);
+  border-left: 2px solid;
+}
+
+.stat-name {
+  font-weight: 600;
+}
+
+.stat-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.btn-ending {
+  font-size: 1.2rem !important;
+  padding: 15px 40px !important;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  font-weight: 700 !important;
+  transition: all 0.3s ease !important;
+  border-radius: 6px !important;
+}
+
+/* VICTORY ENDING */
+.ending-screen-fullscreen.ending-victory {
+  background: radial-gradient(circle at center, rgba(76, 175, 80, 0.15) 0%, rgba(10, 40, 10, 0.95) 50%, rgba(10, 10, 10, 1) 100%);
+  box-shadow: inset 0 0 100px rgba(76, 175, 80, 0.2);
+}
+
+.ending-victory .ending-icon {
+  color: transparent;
+  -webkit-text-stroke: 3px #4CAF50;
+  text-stroke: 3px #4CAF50;
+  text-shadow: 
+    0 0 20px rgba(76, 175, 80, 0.8),
+    0 0 40px rgba(76, 175, 80, 0.5);
+}
+
+/* Victory Door Icon */
+.ending-icon-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.victory-door-icon {
+  width: 8rem;
+  height: 8rem;
+  object-fit: contain;
+  filter: 
+    brightness(0) 
+    saturate(100%) 
+    invert(65%) 
+    sepia(94%) 
+    saturate(345%) 
+    hue-rotate(74deg) 
+    brightness(96%) 
+    contrast(89%)
+    drop-shadow(0 0 20px rgba(76, 175, 80, 0.8))
+    drop-shadow(0 0 40px rgba(76, 175, 80, 0.5))
+    drop-shadow(0 0 60px rgba(76, 175, 80, 0.3));
+  animation: endingIconPulse 2s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+  .victory-door-icon {
+    width: 5rem;
+    height: 5rem;
+  }
+}
+
+@media (max-height: 700px) {
+  .victory-door-icon {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+.ending-victory .ending-title {
+  color: #4CAF50;
+  text-shadow: 0 0 10px rgba(76, 175, 80, 0.8), 0 0 20px rgba(76, 175, 80, 0.6), 3px 3px 8px rgba(0, 0, 0, 0.9);
+}
+
+.ending-victory .ending-text,
+.ending-victory .stat-item {
+  border-left-color: #4CAF50;
+}
+
+.ending-victory .btn-ending {
+  background-color: #4CAF50 !important;
+  border-color: #66BB6A !important;
+  color: #fff !important;
+}
+
+.ending-victory .btn-ending:hover {
+  background-color: #66BB6A !important;
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.6) !important;
+}
+
+/* DEFEAT ENDING */
+.ending-screen-fullscreen.ending-defeat {
+  background: radial-gradient(circle at center, rgba(165, 42, 42, 0.28) 0%, rgba(80, 0, 0, 0.96) 45%, rgba(10, 0, 0, 1) 100%);
+  box-shadow: inset 0 0 120px rgba(139, 0, 0, 0.55);
+}
+
+.ending-defeat .ending-icon {
+  color: #d63b3b;
+  text-shadow:
+    0 0 18px rgba(214, 59, 59, 0.95),
+    0 0 40px rgba(139, 0, 0, 0.8),
+    4px 4px 10px rgba(0, 0, 0, 0.95);
+}
+
+.ending-defeat .ending-title {
+  color: #d63b3b;
+  text-shadow: 0 0 10px rgba(214, 59, 59, 0.95), 0 0 24px rgba(139, 0, 0, 0.8), 3px 3px 8px rgba(0, 0, 0, 0.9);
+}
+
+.ending-defeat .ending-text,
+.ending-defeat .stat-item {
+  border-left-color: #d63b3b;
+}
+
+.ending-defeat .btn-ending {
+  background-color: #8b0000 !important;
+  border-color: #d63b3b !important;
+  color: #fff !important;
+}
+
+.ending-defeat .btn-ending:hover {
+  background-color: #a52a2a !important;
+  box-shadow: 0 0 20px rgba(139, 0, 0, 0.8) !important;
+}
+
+/* NEUTRAL ENDING */
+.ending-screen-fullscreen.ending-neutral {
+  background: radial-gradient(circle at center, rgba(136, 136, 136, 0.1) 0%, rgba(20, 20, 20, 0.95) 50%, rgba(10, 10, 10, 1) 100%);
+  box-shadow: inset 0 0 100px rgba(136, 136, 136, 0.15);
+}
+
+.ending-neutral .ending-icon {
+  color: #888;
+  text-shadow: 0 0 20px rgba(136, 136, 136, 0.6);
+}
+
+.ending-neutral .ending-title {
+  color: #888;
+  text-shadow: 0 0 10px rgba(136, 136, 136, 0.6), 0 0 20px rgba(136, 136, 136, 0.4), 3px 3px 8px rgba(0, 0, 0, 0.9);
+}
+
+.ending-neutral .ending-text,
+.ending-neutral .stat-item {
+  border-left-color: #888;
+}
+
+.ending-neutral .btn-ending {
+  background-color: #555 !important;
+  border-color: #888 !important;
+  color: #fff !important;
+}
+
+.ending-neutral .btn-ending:hover {
+  background-color: #666 !important;
+  box-shadow: 0 0 20px rgba(136, 136, 136, 0.5) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ending-game-title {
+    font-size: 1.5rem;
+    letter-spacing: 0.3rem;
+  }
+
+  .ending-icon {
+    font-size: 5rem;
+  }
+
+  .ending-title {
+    font-size: 2.5rem;
+    letter-spacing: 0.8rem;
+  }
+
+  .ending-text {
+    font-size: 1rem;
+    padding: 20px;
+    max-height: 40vh;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    max-height: 30vh;
+  }
+
+  .ending-screen-fullscreen {
+    padding: 15px;
+  }
+}
+
+@media (max-height: 700px) {
+  .ending-icon {
+    font-size: 4rem;
+  }
+
+  .ending-title {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+
+  .ending-text {
+    font-size: 0.95rem;
+    padding: 15px;
+    max-height: 25vh;
+  }
+
+  .stats-grid {
+    max-height: 20vh;
+  }
+}
