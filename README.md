@@ -42,5 +42,3 @@ Das Spiel funktioniert vollständig im Browser ohne Server:
 
 ---
 
-**Original ASP.NET Version:** Befindet sich im Hauptverzeichnis des Projekts
-**Statische Version:** Im /docs/ Ordner (diese Datei)
