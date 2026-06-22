@@ -1,0 +1,32 @@
+{
+  "Taschenlampe": {
+    "name": "Taschenlampe",
+    "description": "Eine funktionierende Taschenlampe.",
+    "icon": "🔦"
+  },
+  "Schlüsselkarte": {
+    "name": "Magnetkarte",
+    "description": "Eine Magnetkarte zum Öffnen verschlossener Türen.",
+    "icon": "🔑"
+  },
+  "Patientenakte": {
+    "name": "Patientenakte",
+    "description": "Eine verstörende Patientenakte mit Ihrem Namen.",
+    "icon": "📋"
+  },
+  "Altes_Foto": {
+    "name": "Altes Foto",
+    "description": "Ein verstörendes Foto aus der Vergangenheit.",
+    "icon": "📷"
+  },
+  "Voss_Medikament": {
+    "name": "Dr. Voss Medikament",
+    "description": "Ein geheimnisvolles Medikament von Dr. Voss.",
+    "icon": "💊"
+  },
+  "Kontrolldiskette": {
+    "name": "Kontrolldiskette",
+    "description": "Eine geheimnisvolle Kontrollschaltung.",
+    "icon": "💾"
+  }
+}

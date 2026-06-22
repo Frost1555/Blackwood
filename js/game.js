@@ -1,47 +1,8 @@
 // Game Logic
 const START_SCENE_ID = "start";
 const SAVE_KEY = "gameState";
-
-const ITEM_DEFINITIONS = {
-  "Taschenlampe": {
-    name: "Taschenlampe",
-    description: "Eine funktionierende Taschenlampe.",
-    icon: "🔦"
-  },
-  "Schlüsselkarte": {
-    name: "Magnetkarte",
-    description: "Eine Magnetkarte zum Öffnen verschlossener Türen.",
-    icon: "🔑"
-  },
-  "Patientenakte": {
-    name: "Patientenakte",
-    description: "Eine verstörende Patientenakte mit Ihrem Namen.",
-    icon: "📋"
-  },
-  "Altes_Foto": {
-    name: "Altes Foto",
-    description: "Ein verstörendes Foto aus der Vergangenheit.",
-    icon: "📷"
-  },
-  "Voss_Medikament": {
-    name: "Dr. Voss Medikament",
-    description: "Ein geheimnisvolles Medikament von Dr. Voss.",
-    icon: "💊"
-  },
-  "Kontrolldiskette": {
-    name: "Kontrolldiskette",
-    description: "Eine geheimnisvolle Kontrollschaltung.",
-    icon: "💾"
-  }
-};
-
-function getItemDefinition(itemId) {
-  return ITEM_DEFINITIONS[itemId] || {
-    name: itemId.replace(/_/g, " "),
-    description: "",
-    icon: "▣"
-  };
-}
+const STORY_URL = "./data/story.json";
+const ITEMS_URL = "./data/items.json";
 
 function escapeHtml(value) {
   return String(value)
@@ -53,7 +14,9 @@ function escapeHtml(value) {
 }
 
 class GameEngine {
-  constructor() {
+  constructor(scenes, itemDefinitions) {
+    this.scenes = scenes;
+    this.itemDefinitions = itemDefinitions;
     this.currentSceneId = START_SCENE_ID;
     this.stats = {};
     this.hiddenStats = {};
@@ -64,6 +27,14 @@ class GameEngine {
     if (this.enterScene(this.currentSceneId)) {
       this.saveState();
     }
+  }
+
+  getItemDefinition(itemId) {
+    return this.itemDefinitions[itemId] || {
+      name: itemId.replace(/_/g, " "),
+      description: "",
+      icon: "▣"
+    };
   }
 
   loadState() {
@@ -134,11 +105,11 @@ class GameEngine {
   }
 
   sceneExists(sceneId) {
-    return GAME_DATA.some(scene => scene.Id === sceneId);
+    return this.scenes.some(scene => scene.Id === sceneId);
   }
 
   getCurrentScene() {
-    return GAME_DATA.find(scene => scene.Id === this.currentSceneId) || GAME_DATA[0];
+    return this.scenes.find(scene => scene.Id === this.currentSceneId) || this.scenes[0];
   }
 
   getOption(optionId) {
@@ -183,7 +154,7 @@ class GameEngine {
 
     for (const itemId of option.RequiredItems || []) {
       if (!this.items[itemId]) {
-        const item = getItemDefinition(itemId);
+        const item = this.getItemDefinition(itemId);
         missingRequirements.push(`${item.icon} ${item.name}`);
       }
     }
@@ -388,7 +359,7 @@ class UIRenderer {
     }
 
     const itemsHtml = items.map(([itemId, count]) => {
-      const item = getItemDefinition(itemId);
+      const item = this.engine.getItemDefinition(itemId);
       const countHtml = count > 1 ? `<span class="item-count">${count}</span>` : "";
 
       return `
@@ -511,7 +482,7 @@ class UIRenderer {
     }
 
     const itemsHtml = items.map(([itemId, count]) => {
-      const item = getItemDefinition(itemId);
+      const item = this.engine.getItemDefinition(itemId);
       const countHtml = count > 1 ? `<span class="item-count">${count}</span>` : "";
 
       return `
@@ -537,7 +508,49 @@ class UIRenderer {
 let gameEngine;
 let renderer;
 
-document.addEventListener("DOMContentLoaded", () => {
-  gameEngine = new GameEngine();
-  renderer = new UIRenderer(gameEngine);
+async function loadStory() {
+  const response = await fetch(STORY_URL);
+  if (!response.ok) {
+    throw new Error(`Story konnte nicht geladen werden (${response.status}).`);
+  }
+
+  const scenes = await response.json();
+  if (!Array.isArray(scenes) || scenes.length === 0) {
+    throw new Error("Die Story enthält keine Szenen.");
+  }
+
+  return scenes;
+}
+
+async function loadItems() {
+  const response = await fetch(ITEMS_URL);
+  if (!response.ok) {
+    throw new Error(`Items konnten nicht geladen werden (${response.status}).`);
+  }
+
+  const itemDefinitions = await response.json();
+  if (!itemDefinitions || Array.isArray(itemDefinitions) || typeof itemDefinitions !== "object") {
+    throw new Error("Die Item-Datei ist ungültig.");
+  }
+
+  return itemDefinitions;
+}
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .catch(error => console.error("Service Worker konnte nicht registriert werden.", error));
+  });
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const [scenes, itemDefinitions] = await Promise.all([loadStory(), loadItems()]);
+    gameEngine = new GameEngine(scenes, itemDefinitions);
+    renderer = new UIRenderer(gameEngine);
+  } catch (error) {
+    console.error(error);
+    document.getElementById("app").textContent =
+      "Die Spieldaten konnten nicht geladen werden. Bitte starten Sie das Spiel über einen lokalen Webserver.";
+  }
 });

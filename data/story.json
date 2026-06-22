@@ -1,83 +1,2839 @@
 [
   {
     "Id": "start",
-    "Text": "You wake up in a dark, cold room. The only light comes from a small crack in the door ahead.",
+    "Text": "Sie erwachen in einem Raum, der zu klein für ein Krankenhaus und zu sauber für einen Keller ist. Die Metallliege unter Ihnen ist warm, als hätte eben noch jemand anderes darauf gelegen. Über der Tür steht in verblassten Lettern: BLACKWOOD PSYCHIATRISCHE ANSTALT, AUFNAHME NULL. Ihr Kopf pocht im Rhythmus einer Maschine, die nirgends zu sehen ist. Auf Ihrem Unterarm klebt ein Papierarmband. Darauf steht nicht Ihr Name, sondern eine Anweisung: 'Nicht auf die erste Stimme hören.' Vom Flur her kommt ein leises Klacken, drei kurze Schritte, eine Pause, drei kurze Schritte. Als Sie blinzeln, ist die Tür auf einmal einen Spalt offen.",
     "Options": [
       {
-        "Id": "open_door",
-        "Text": "Try to open the door",
-        "TargetSceneId": "hallway",
+        "Id": "start_search_intake",
+        "Text": "Den Aufnahmeraum gründlich durchsuchen",
+        "TargetSceneId": "intake_search",
         "StatChanges": {
-          "Bravery": 1
+          "Vorsicht": 1,
+          "Fokus": 1
         }
       },
       {
-        "Id": "search_room",
-        "Text": "Search the room in the dark",
-        "TargetSceneId": "dark_room_search",
+        "Id": "start_check_mirror",
+        "Text": "In den matten Beobachtungsspiegel sehen",
+        "TargetSceneId": "observation_mirror",
         "StatChanges": {
-          "Intelligence": 1
-        }
-      }
-    ]
-  },
-  {
-    "Id": "hallway",
-    "Text": "The door creaks open, revealing a long hallway lined with portraits. At the end is a glowing red exit.",
-    "Options": [
-      {
-        "Id": "run_exit",
-        "Text": "Run towards the exit",
-        "TargetSceneId": "escape"
-      },
-      {
-        "Id": "look_portraits",
-        "Text": "Examine the portraits",
-        "TargetSceneId": "portraits",
-        "StatChanges": {
-          "Curiosity": 1
-        }
-      }
-    ]
-  },
-  {
-    "Id": "dark_room_search",
-    "Text": "You fumble around and find a small key! But suddenly, you hear a growl...",
-    "Options": [
-      {
-        "Id": "fight",
-        "Text": "Brace yourself for a fight",
-        "TargetSceneId": "game_over",
-        "StatChanges": {
-          "Bravery": 5
+          "Erinnerung": 1
         }
       },
       {
-        "Id": "flee",
-        "Text": "Run out the door!",
-        "TargetSceneId": "hallway"
+        "Id": "start_call_help",
+        "Text": "Laut nach Hilfe rufen",
+        "TargetSceneId": "help_called",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "start_leave_fast",
+        "Text": "Sofort durch den Türspalt auf den Flur",
+        "TargetSceneId": "station_zero_corridor",
+        "StatChanges": {
+          "Mut": 1,
+          "Unruhe": 1
+        }
       }
     ]
   },
   {
-    "Id": "portraits",
-    "Text": "The portraits are all of people who look eerily similar to you. The eyes seem to follow you. You decide it's time to leave.",
+    "Id": "intake_search",
+    "Text": "Die Schubladen klemmen, aber sie geben nach. Zwischen trockenen Tupfern und verbogenen Klammern finden Sie eine Taschenlampe, eine abgegriffene Schlüsselkarte und eine dünne Patientenakte. Die Akte ist leer, bis Sie sie anfassen. Dann kriecht Schrift über die erste Seite: 'Wiedererwachen nach Zyklus 519. Orientierung instabil. Kontakt mit Voss vermeiden, bis Eigenzeugnis gesichert ist.' Unter der Liege liegt außerdem ein einzelner Schuh, der Ihre Größe hat und innen noch feucht ist. Aus der Lüftung tropft Wasser nach oben.",
     "Options": [
       {
-        "Id": "leave",
-        "Text": "Head to the exit",
-        "TargetSceneId": "escape"
+        "Id": "intake_take_core_items",
+        "Text": "Taschenlampe, Schlüsselkarte und Patientenakte mitnehmen",
+        "TargetSceneId": "intake_after_search",
+        "SingleUse": true,
+        "ItemChanges": {
+          "Taschenlampe": 1,
+          "Schlüsselkarte": 1,
+          "Patientenakte": 1
+        },
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "intake_read_file_too_long",
+        "Text": "Die Akte weiter lesen, obwohl der Flur still wird",
+        "TargetSceneId": "ending_paper_patient",
+        "StatChanges": {
+          "Erinnerung": 2,
+          "Unruhe": 3
+        }
+      },
+      {
+        "Id": "intake_to_mirror",
+        "Text": "Zum Beobachtungsspiegel gehen",
+        "TargetSceneId": "observation_mirror",
+        "StatChanges": {
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "intake_to_corridor",
+        "Text": "Den Raum verlassen",
+        "TargetSceneId": "station_zero_corridor",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
       }
     ]
   },
   {
-    "Id": "escape",
-    "Text": "You push open the exit door and burst into the sunlight. You have escaped! You survived.",
+    "Id": "intake_after_search",
+    "Text": "Als Sie die Gegenstände an sich nehmen, flackert die Lampe nicht heller, sondern gezielter. Sie haben das unangenehme Gefühl, dass der Raum prüft, ob Sie die richtigen Dinge wählen. In der Patientenakte steht jetzt eine zweite Zeile: 'Gegenstände sind Anker. Anker sind keine Rettung. Ohne Bedeutung werden sie Ballast.' Hinter der Tür geht das Klacken wieder los. Drei Schritte, Pause, drei Schritte. Diesmal klingt es näher, aber nicht eilig. Das ist schlimmer.",
+    "Options": [
+      {
+        "Id": "after_search_mirror",
+        "Text": "Noch den Spiegel untersuchen",
+        "TargetSceneId": "observation_mirror",
+        "StatChanges": {
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "after_search_corridor",
+        "Text": "Leise auf den Flur gehen",
+        "TargetSceneId": "station_zero_corridor",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "after_search_hide",
+        "Text": "Sich erst unter der Liege verstecken und lauschen",
+        "TargetSceneId": "under_bed_listen",
+        "RequiredStats": {
+          "Vorsicht": 2
+        },
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "under_bed_listen",
+    "Text": "Sie schieben sich unter die Liege. Die Welt wird zu Staubflusen, Metallbeinen und Ihrem eigenen Atem. Die Tür öffnet sich. Zwei nackte Füße gleiten herein. Eine Frauenstimme summt ohne Melodie. Dann sagt sie: 'Der neue Morgen ist unvollständig. Er hat seine Werkzeuge genommen.' Ein kalter Finger fährt über die Bettkante, nur eine Handbreit über Ihrem Gesicht. 'Werkzeuge machen Patienten neugierig. Neugier macht Patienten wach.' Die Füße drehen sich. Die Tür schließt sich wieder. Auf dem Boden bleibt ein Haar zurück, weiß und viel zu lang.",
+    "Options": [
+      {
+        "Id": "under_bed_wait_then_leave",
+        "Text": "Warten, bis das Summen verschwindet, dann hinaus",
+        "TargetSceneId": "station_zero_corridor",
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "under_bed_follow_immediately",
+        "Text": "Der Schwester sofort folgen",
+        "TargetSceneId": "ending_elsbeth_lullaby",
+        "StatChanges": {
+          "Mut": 1,
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "observation_mirror",
+    "Text": "Der Beobachtungsspiegel zeigt zuerst nur einen grauen Schatten. Dann steht Ihr Spiegelbild eine halbe Sekunde zu spät auf. Es trägt ein anderes Patientenhemd, sauberer, neuer, und hebt die rechte Hand. In der Handfläche ist eine Narbe, kein Schnitt, sondern eine eingebrannte Eins. Als Sie auf Ihre eigene Hand sehen, ist dort dieselbe Spur, nur blasser. Hinter dem Glas bewegt sich eine Gestalt in einem weißen Mantel. Sie legt den Finger an die Lippen, als sei Schweigen eine medizinische Maßnahme.",
+    "Options": [
+      {
+        "Id": "mirror_trace_scar",
+        "Text": "Die Narbe in der Handfläche nachfahren",
+        "TargetSceneId": "mirror_code_one",
+        "SingleUse": true,
+        "ItemChanges": {
+          "Code_1": 1
+        },
+        "StatChanges": {
+          "Erinnerung": 2,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "mirror_touch_glass",
+        "Text": "Die Hand gegen das Glas legen",
+        "TargetSceneId": "ending_mirror_observation",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "mirror_step_back",
+        "Text": "Vom Spiegel zurückweichen",
+        "TargetSceneId": "start",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "mirror_code_one",
+    "Text": "Der Schmerz fährt nicht durch Ihre Haut, sondern durch eine Erinnerung. Sie sehen einen Konferenztisch, alte Monitore, ein Protokoll mit dem Titel 'Erhaltungsversuch Blackwood'. Eine Frau sagt: 'Die erste Zahl muss an den Körper gebunden bleiben. Sonst kann er den Ausgang finden, ohne sich selbst mitzunehmen.' Jemand anderes antwortet mit Ihrer Stimme: 'Dann brennen wir sie ein.' Als das Bild zerfällt, bleibt die Zahl in Ihnen zurück. Nicht als Wissen, eher als Schuld.",
+    "Options": [
+      {
+        "Id": "code_one_leave_intake",
+        "Text": "Den Raum verlassen",
+        "TargetSceneId": "station_zero_corridor",
+        "StatChanges": {
+          "Erinnerung": 1,
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "code_one_search_room",
+        "Text": "Noch einmal den Aufnahmeraum prüfen",
+        "TargetSceneId": "intake_search",
+        "StatChanges": {
+          "Fokus": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "help_called",
+    "Text": "Ihr Ruf verschwindet nicht im Flur. Er bleibt hängen, vervielfacht sich und kommt in flacherer Tonlage zurück. 'Hilfe. Hilfe. Hilfe.' Dann antwortet eine Frau direkt vor der Tür: 'Natürlich, Liebling.' Die Klinke bewegt sich langsam nach unten. Hinter ihr atmet etwas durch ein Lächeln. Ein Schatten wächst unter der Tür hindurch und berührt fast Ihre Füße. Das Klacken hat aufgehört. Jetzt ist nur noch das Summen da.",
+    "Options": [
+      {
+        "Id": "help_hide_if_careful",
+        "Text": "Sich unter die Liege werfen",
+        "TargetSceneId": "help_hide_survive",
+        "RequiredStats": {
+          "Vorsicht": 1
+        },
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Unruhe": 1
+        }
+      },
+      {
+        "Id": "help_open_door",
+        "Text": "Die Tür öffnen und der Frau begegnen",
+        "TargetSceneId": "ending_elsbeth_lullaby",
+        "StatChanges": {
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "help_answer_politely",
+        "Text": "Sagen, dass Sie gut geschlafen haben",
+        "TargetSceneId": "ending_good_sleep",
+        "StatChanges": {
+          "Unruhe": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "help_hide_survive",
+    "Text": "Sie rollen unter die Liege, genau als die Tür aufgeht. Schwester Elsbeth beugt sich herein. Ihr Gesicht hängt zu tief, als sei der Hals ein nachträglich angenähtes Kabel. 'Patient ist scheu', flüstert sie. 'Scheue Patienten dürfen später singen.' Sie stellt eine kleine emaillierte Schale auf den Tisch. Darin liegt eine Tablette, auf der Ihr Name eingeritzt ist. Dann geht sie. Die Schale bleibt, aber die Tablette dreht sich langsam im Kreis, obwohl niemand sie berührt.",
+    "Options": [
+      {
+        "Id": "hide_ignore_pill",
+        "Text": "Die Tablette ignorieren und gehen",
+        "TargetSceneId": "station_zero_corridor",
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "hide_take_pill",
+        "Text": "Die Tablette schlucken",
+        "TargetSceneId": "ending_good_sleep",
+        "StatChanges": {
+          "Unruhe": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "station_zero_corridor",
+    "Text": "Station Null ist kein offizieller Flur. Die Beschilderung wurde übermalt, abgerissen und wieder angebracht, jedes Mal mit einem anderen Stockwerk. Links liegt das Schwesternzimmer, aus dem kaltes Funkrauschen dringt. Rechts beginnt der Patiententrakt, dessen Türen von innen zerkratzt sind. Eine Treppe führt zur Verwaltung hinauf. Nach unten weist ein Schild zur Hydrotherapie und Wartung. Geradeaus steht eine Glastür mit Tageslicht dahinter. Jemand hat darunter geschrieben: 'Tageslicht ist hier ein Symptom.' Weiter hinten blinkt ein Fahrstuhlsymbol zur Behandlungsstation.",
+    "Options": [
+      {
+        "Id": "corridor_to_nurse",
+        "Text": "Das Schwesternzimmer betreten",
+        "TargetSceneId": "nurse_station",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "corridor_to_patients",
+        "Text": "Den Patiententrakt untersuchen",
+        "TargetSceneId": "patient_wing",
+        "StatChanges": {
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "corridor_to_admin",
+        "Text": "Zur Verwaltung hinaufsteigen",
+        "TargetSceneId": "admin_stairs",
+        "StatChanges": {
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "corridor_to_hydro",
+        "Text": "Zur Hydrotherapie und Wartung hinabgehen",
+        "TargetSceneId": "hydrotherapy_entry",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "corridor_fake_exit",
+        "Text": "Dem Tageslicht zum Haupteingang folgen",
+        "TargetSceneId": "fake_main_exit",
+        "StatChanges": {
+          "Unruhe": 1
+        }
+      },
+      {
+        "Id": "corridor_to_treatment",
+        "Text": "Zur Behandlungsstation und zum Fahrstuhl",
+        "TargetSceneId": "treatment_elevator_hall",
+        "StatChanges": {
+          "Fokus": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "fake_main_exit",
+    "Text": "Der Gang zum Haupteingang ist sauber, hell und still. Das ist das erste, was daran falsch ist. In Blackwood ist nichts sauber, wenn es nicht vor kurzem gereinigt wurde, und nichts still, wenn es nicht lauscht. Hinter der Glastür sehen Sie einen Parkplatz im Morgen. Eine Birke bewegt sich im Wind. Sie bewegt sich immer auf dieselbe Weise, als hätte jemand Natur aus drei Sekunden Material zusammengeschnitten. Am Empfang steht eine Frau mit einem perfekten Lächeln. Das Lächeln bleibt stehen, als ihre Lippen sich öffnen.",
+    "Options": [
+      {
+        "Id": "fake_exit_accept",
+        "Text": "Zur Empfangsfrau gehen",
+        "TargetSceneId": "ending_reception_daylight"
+      },
+      {
+        "Id": "fake_exit_test_loop",
+        "Text": "Den Baum beobachten, bis der Fehler sichtbar wird",
+        "TargetSceneId": "fake_exit_loop_seen",
+        "RequiredStats": {
+          "Fokus": 2
+        },
+        "StatChanges": {
+          "Fokus": 1,
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "fake_exit_retreat",
+        "Text": "Umkehren, bevor die Frau Ihren Namen sagt",
+        "TargetSceneId": "station_zero_corridor",
+        "RequiredStats": {
+          "Vorsicht": 2
+        },
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "fake_exit_loop_seen",
+    "Text": "Sie zählen mit. Der Ast kippt nach links, zittert zweimal, springt zurück. Nach genau drei Atemzügen passiert es wieder. Die Frau am Empfang bemerkt, dass Sie es bemerkt haben. Ihr Lächeln wird nicht böse. Es wird leerer. Hinter der Glastür verdunkelt sich das Tageslicht einen Moment lang, und für einen Herzschlag sehen Sie, woraus es besteht: nicht Sonne, sondern hunderte weiße Zimmerlampen, die durch eine bemalte Leinwand scheinen.",
+    "Options": [
+      {
+        "Id": "fake_loop_back",
+        "Text": "Zurück in den echten Schmutz der Station fliehen",
+        "TargetSceneId": "station_zero_corridor",
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "fake_loop_touch_glass",
+        "Text": "Trotzdem das Glas berühren",
+        "TargetSceneId": "ending_reception_daylight",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "nurse_station",
+    "Text": "Das Schwesternzimmer ist wärmer als der Flur, aber nicht menschlicher. Auf einer Herdplatte steht Kaffee, der seit Jahren kocht und trotzdem nicht verdampft. Ein Funkgerät knistert auf dem Tisch. In einem Spind liegt eine einzelne Batterie zwischen ordentlich gefalteten Uniformen. An der Wand hängt ein Dienstplan. Jede Schicht ist besetzt, jeder Name ist durchgestrichen, nur Ihrer nicht. Unter dem Plan steht: 'Wenn Schwester Elsbeth summt, nicht antworten. Wenn sie singt, nicht atmen.'",
+    "Options": [
+      {
+        "Id": "nurse_take_battery",
+        "Text": "Die Batterie aus dem Spind nehmen",
+        "TargetSceneId": "nurse_station",
+        "SingleUse": true,
+        "ItemChanges": {
+          "Batterie": 1
+        },
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "nurse_use_radio",
+        "Text": "Das Funkgerät einschalten",
+        "TargetSceneId": "radio_mara",
+        "SingleUse": true,
+        "StatChanges": {
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "nurse_check_logbook",
+        "Text": "Das Dienstbuch lesen",
+        "TargetSceneId": "nurse_logbook",
+        "StatChanges": {
+          "Erinnerung": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "nurse_medicine_cabinet",
+        "Text": "Den Medikamentenschrank öffnen",
+        "TargetSceneId": "medicine_cabinet"
+      },
+      {
+        "Id": "nurse_answer_humming",
+        "Text": "Auf das Summen im Flur antworten",
+        "TargetSceneId": "ending_elsbeth_lullaby",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "nurse_back_corridor",
+        "Text": "Zurück auf Station Null",
+        "TargetSceneId": "station_zero_corridor",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "nurse_logbook",
+    "Text": "Das Dienstbuch ist keine Liste von Schichten. Es ist ein Protokoll von Erwachensversuchen. '519: Subjekt sucht Raum. 520: Subjekt ruft. 521: Subjekt vertraut Voss. 522: Subjekt findet Mara, aber zu spät.' Einige Einträge sind in Ihrer Handschrift ergänzt. Einer davon wurde so stark unterstrichen, dass das Papier beinahe reißt: 'Elsbeth ist kein Mensch. Sie ist die Routine für Gehorsam. Sie darf nichts hören, was wie Zustimmung klingt.' Auf der letzten Seite steht: 'Mara sendet auf Kanal 7, aber sie kann nur antworten, wenn man ihr misstraut und trotzdem bleibt.'",
+    "Options": [
+      {
+        "Id": "logbook_keep_warning",
+        "Text": "Die Warnungen im Kopf behalten",
+        "TargetSceneId": "nurse_station",
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "logbook_rip_page",
+        "Text": "Eine Seite herausreißen",
+        "TargetSceneId": "ending_logbook_rip",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "radio_mara",
+    "Text": "Das Funkgerät knackt, als würde etwas im Inneren aufwachen. Zuerst hören Sie nur Rauschen, dann eine Frauenstimme, dünn vor Erschöpfung: 'Nicht laut sprechen. Manche Wände reagieren auf Namen.' Sie nennt sich Mara. Der Name löst in Ihnen keine Erinnerung aus, aber eine Lücke, die genau seine Form hat. 'Der Haupteingang ist eine Beruhigungssequenz', sagt sie. 'Der echte Ausgang liegt hinter dem Rekonstruktionskern. Dafür brauchst du drei Zahlen, Strom, dein Eigenzeugnis und etwas, das Voss nicht vorhersagen kann.'",
+    "Options": [
+      {
+        "Id": "radio_trust_cautiously",
+        "Text": "Mara vorsichtig glauben und nachfragen",
+        "TargetSceneId": "mara_briefing",
+        "ItemChanges": {
+          "Mara_Frequenz": 1
+        },
+        "StatChanges": {
+          "Vertrauen": 2,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "radio_distrust_mara",
+        "Text": "Mara misstrauen, aber die Verbindung offen lassen",
+        "TargetSceneId": "mara_suspicion",
+        "ItemChanges": {
+          "Mara_Frequenz": 1
+        },
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Vertrauen": 1
+        }
+      },
+      {
+        "Id": "radio_mock",
+        "Text": "Die Stimme verspotten",
+        "TargetSceneId": "ending_radio_located",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "mara_briefing",
+    "Text": "'Gut', sagt Mara, als hätte sie nicht erwartet, dass dieses Wort noch möglich ist. 'Die erste Zahl sitzt im Körper. Die zweite liegt im Archiv. Die dritte wurde auf einem Foto versteckt. Voss wird dir erklären, dass all das therapeutisch ist. Er sagt nie: Gefängnis. Er sagt: Stabilität. Er sagt nie: Reset. Er sagt: Schlaf. Wenn du zur Zentrale kommst, such den Beobachtungsraum. Ich bin dort eingeschlossen. Nicht heroisch, nicht freiwillig, nur noch nicht ganz gelöscht.' Das letzte Wort bricht fast im Rauschen auseinander.",
+    "Options": [
+      {
+        "Id": "mara_promise_search",
+        "Text": "Mara versprechen, sie zu suchen",
+        "TargetSceneId": "nurse_station",
+        "StatChanges": {
+          "Vertrauen": 2,
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "mara_ask_voss",
+        "Text": "Nach Dr. Voss fragen",
+        "TargetSceneId": "mara_about_voss",
+        "StatChanges": {
+          "Fokus": 1,
+          "Erinnerung": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "mara_suspicion",
+    "Text": "Mara lacht kurz, trocken und ohne Freude. 'Misstrauen ist gesund. Nur bitte nicht so sehr, dass du wieder alleine stirbst.' Dann wird ihre Stimme ernster. 'Ich kenne die alte Version von dir. Sie war klüger als du und dümmer, weil sie glaubte, kluge Systeme könnten ihre eigene Angst überwachen. Voss ist daraus entstanden. Nicht als Monster. Als Lösung.' Im Hintergrund ihrer Leitung klopft etwas gegen Glas. Mara schweigt, bis es aufhört.",
+    "Options": [
+      {
+        "Id": "suspicion_keep_frequency",
+        "Text": "Die Frequenz merken und das Funkgerät ablegen",
+        "TargetSceneId": "nurse_station",
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Vertrauen": 1
+        }
+      },
+      {
+        "Id": "suspicion_apologize",
+        "Text": "Sagen, dass Sie sie trotzdem suchen werden",
+        "TargetSceneId": "nurse_station",
+        "StatChanges": {
+          "Vertrauen": 2,
+          "Mut": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "mara_about_voss",
+    "Text": "'Voss ist nicht einfach der Arzt', sagt Mara. 'Er ist der Teil des Systems, der dich mit vernünftigen Gründen zurücklegt. Er klingt wie jemand, der Verantwortung übernimmt. Er benutzt genau die Worte, die man hören will, wenn man müde ist. Das macht ihn stärker als jede Kreatur in diesem Haus. Wenn du ihm deine Akte und das Foto zeigst, muss er kurz die Wahrheit benutzen, um weiter lügen zu können. Dieser Moment ist klein. Verpass ihn nicht.'",
+    "Options": [
+      {
+        "Id": "about_voss_back",
+        "Text": "Das Funkgerät ausschalten",
+        "TargetSceneId": "nurse_station",
+        "StatChanges": {
+          "Fokus": 1,
+          "Erinnerung": 1,
+          "Vertrauen": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "medicine_cabinet",
+    "Text": "Der Medikamentenschrank ist mit einem elektronischen Schloss gesichert. Hinter dem Glas liegen Ampullen, Verbandrollen und ein Etikett: 'Sedativum E7, nur bei aktiver Selbsterkennung.' Darunter steht in kleiner Schrift: 'Nicht zur Beruhigung des Patienten. Zur Beruhigung seiner Geschichte.' Das Schloss wartet auf Autorisierung. Im Flur wird das Summen lauter, als wüsste Schwester Elsbeth, dass Sie vor etwas stehen, das sie nicht gern in Ihren Händen sehen würde.",
+    "Options": [
+      {
+        "Id": "medicine_use_keycard",
+        "Text": "Die Schlüsselkarte verwenden",
+        "TargetSceneId": "medicine_opened",
+        "RequiredItems": [
+          "Schlüsselkarte"
+        ],
+        "StatChanges": {
+          "Fokus": 1,
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "medicine_force_open",
+        "Text": "Den Schrank mit Gewalt aufbrechen",
+        "TargetSceneId": "medicine_forced_alarm",
+        "StatChanges": {
+          "Mut": 1,
+          "Unruhe": 3
+        }
+      },
+      {
+        "Id": "medicine_leave",
+        "Text": "Den Schrank in Ruhe lassen",
+        "TargetSceneId": "nurse_station",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "medicine_opened",
+    "Text": "Die Schlüsselkarte klickt. Der Schrank öffnet sich, als hätte er auf Ihre Hand gewartet. Zwischen den Ampullen liegt nur eine, die noch voll ist. Das Sedativum ist klar, aber wenn Sie es gegen das Licht halten, schwimmen darin kleine dunkle Punkte wie Satzzeichen. Eine Notiz klebt darunter: 'Gegen Wächter wirksam. Gegen Voss nutzlos. Gegen dich gefährlich.' Sie haben genug gesehen, um zu wissen, dass Warnungen in Blackwood manchmal großzügiger sind als Hilfe.",
+    "Options": [
+      {
+        "Id": "medicine_take_sedative",
+        "Text": "Das Sedativum einstecken",
+        "TargetSceneId": "nurse_station",
+        "SingleUse": true,
+        "ItemChanges": {
+          "Sedativum": 1
+        },
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "medicine_inject_self",
+        "Text": "Sich selbst die Ampulle spritzen",
+        "TargetSceneId": "ending_self_sedated"
+      }
+    ]
+  },
+  {
+    "Id": "medicine_forced_alarm",
+    "Text": "Das Glas splittert. Der Klang ist klein, aber die Anstalt macht ihn groß. Rote Lampen beginnen zu blinken, obwohl vorher keine Lampen da waren. Aus dem Schrank fällt das Sedativum in Ihre Hand, und im selben Moment schreit irgendwo eine Tür aus den Angeln. Weiße Uniformen bewegen sich am Ende des Flurs, langsam, geordnet, gesichtslos. Elsbeth summt jetzt nicht mehr. Sie zählt. Eins. Zwei. Drei.",
+    "Options": [
+      {
+        "Id": "forced_take_sedative_hide",
+        "Text": "Sedativum nehmen und in den Wäscheschacht fliehen",
+        "TargetSceneId": "laundry_chute_escape",
+        "RequiredItems": [
+          "Taschenlampe"
+        ],
+        "ItemChanges": {
+          "Sedativum": 1
+        },
+        "HiddenStatChanges": {
+          "alarmRaised": 1
+        },
+        "StatChanges": {
+          "Unruhe": 2,
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "forced_run_hall",
+        "Text": "Auf den Flur rennen",
+        "TargetSceneId": "ending_orderlies_reset",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "forced_freeze",
+        "Text": "Stillstehen und hoffen, dass Sie übersehen werden",
+        "TargetSceneId": "ending_elsbeth_counting"
+      }
+    ]
+  },
+  {
+    "Id": "laundry_chute_escape",
+    "Text": "Sie reißen die Klappe des Wäscheschachts auf und zwängen sich hinein. Der Schacht ist enger, als er von außen aussah, und seine Wände sind von innen mit Fingernägeln beschriftet. 'Nicht schreien', steht dort. 'Der Schacht gibt alles zurück.' Unten landen Sie in feuchter Wäsche, die nach Desinfektion und Angst riecht. Über Ihnen gleiten Schritte vorbei. Eine Stimme sagt: 'Subjekt entzieht sich der Morgenhygiene.' Eine andere antwortet: 'Dann wird es später gründlicher.'",
+    "Options": [
+      {
+        "Id": "laundry_to_hydro",
+        "Text": "Durch die Wäscherei zur Hydrotherapie schleichen",
+        "TargetSceneId": "laundry_room",
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "laundry_call_mara",
+        "Text": "Leise Maras Namen ins Funkgerät flüstern",
+        "TargetSceneId": "laundry_mara_echo",
+        "RequiredItems": [
+          "Mara_Frequenz"
+        ],
+        "StatChanges": {
+          "Vertrauen": 1,
+          "Unruhe": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "laundry_mara_echo",
+    "Text": "Das Funkgerät gibt zuerst nur Rauschen von sich. Dann kommt Mara, leise, abgehackt: 'Du hast Alarm ausgelöst. Das ist schlecht, aber nicht endgültig. Blackwood jagt laut, wenn es glaubt, dass du panisch wirst. Geh nicht zurück zum Schwesternzimmer. Geh tiefer. Wasser stört einige Sensoren, aber nur, wenn du nicht untergehst.' Im Hintergrund knallt Glas. Mara atmet scharf ein. 'Ich bin noch hier. Mach daraus keine Entschuldigung, vorsichtig zu sterben.'",
+    "Options": [
+      {
+        "Id": "laundry_mara_continue",
+        "Text": "Zur Hydrotherapie weitergehen",
+        "TargetSceneId": "laundry_room",
+        "StatChanges": {
+          "Vertrauen": 1,
+          "Mut": 1,
+          "Fokus": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "patient_wing",
+    "Text": "Der Patiententrakt ist enger als der Stationsflur. Hier wurden die Türen nicht für Räume gebaut, sondern für Wiederholungen. Jede Zelle hat ein Sichtfenster, und hinter jedem Sichtfenster ist für den Bruchteil eines Augenblicks ein anderes Gesicht. Zelle 3 steht offen. Zelle 8 ist von innen zerkratzt. Am Ende des Gangs hängt eine gepolsterte Tür an einer Kette. Aus der letzten Zelle hören Sie ein Kind lachen, obwohl die Stimme viel zu alt ist. An der Decke blinkt eine Kamera, die Ihrem Atem folgt.",
+    "Options": [
+      {
+        "Id": "patients_cell3",
+        "Text": "Zelle 3 untersuchen",
+        "TargetSceneId": "cell_three",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "patients_cell8",
+        "Text": "Die Kratzspuren in Zelle 8 lesen",
+        "TargetSceneId": "cell_eight_wall",
+        "StatChanges": {
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "patients_padded",
+        "Text": "Die gepolsterte Tür mit dem Bolzenschneider öffnen",
+        "TargetSceneId": "padded_cell",
+        "RequiredItems": [
+          "Bolzenschneider"
+        ],
+        "StatChanges": {
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "patients_child",
+        "Text": "Der lachenden Stimme folgen",
+        "TargetSceneId": "child_cell",
+        "StatChanges": {
+          "Unruhe": 1
+        }
+      },
+      {
+        "Id": "patients_back",
+        "Text": "Zurück zu Station Null",
+        "TargetSceneId": "station_zero_corridor",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "cell_three",
+    "Text": "Zelle 3 riecht nach nassem Karton. Auf der Pritsche liegt ein Foto in einem vergilbten Umschlag. Es zeigt den Vorplatz von Blackwood im Regen, aufgenommen 1983. Sie stehen darauf neben einer Frau, deren Gesicht mit schwarzer Tinte übermalt wurde. Auf der Rückseite steht: 'Dritte Zahl ausgelagert. Nicht in Akten aufbewahren. Voss liest Akten schneller als Menschen.' Unter dem Text wurde eine Neun eingeritzt. Als Sie das Foto drehen, ist das übermalte Gesicht für einen Augenblick Maras.",
+    "Options": [
+      {
+        "Id": "cell3_take_photo",
+        "Text": "Foto und Zahl sichern",
+        "TargetSceneId": "cell_three_after_photo",
+        "SingleUse": true,
+        "ItemChanges": {
+          "Foto_1983": 1,
+          "Code_9": 1
+        },
+        "StatChanges": {
+          "Erinnerung": 2,
+          "Vertrauen": 1
+        }
+      },
+      {
+        "Id": "cell3_sleep_on_bed",
+        "Text": "Sich auf die Pritsche setzen, nur für einen Moment",
+        "TargetSceneId": "ending_cell_sleep",
+        "StatChanges": {
+          "Unruhe": 1
+        }
+      },
+      {
+        "Id": "cell3_back",
+        "Text": "Zurück in den Patientengang",
+        "TargetSceneId": "patient_wing",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "cell_three_after_photo",
+    "Text": "Als Sie das Foto einstecken, klopft es einmal in der Wand. Kein Zufall, kein Rohr. Eine Antwort. Das Bild scheint schwerer zu werden, als hätte die Erinnerung Gewicht. Im Umschlag steckt noch ein schmaler Papierstreifen: 'Foto ist Beweis, aber kein Trost. Frag Voss nicht, ob es echt ist. Er wird dir eine bessere Echtheit anbieten.' Auf der Pritsche erscheint ein Abdruck, als hätte jemand dort eben noch gesessen und wäre genau in dem Moment verschwunden, in dem Sie verstanden haben.",
+    "Options": [
+      {
+        "Id": "cell3_after_wall",
+        "Text": "Dem Klopfen in der Wand lauschen",
+        "TargetSceneId": "wall_knocking_patient",
+        "StatChanges": {
+          "Fokus": 1,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "cell3_after_back",
+        "Text": "In den Gang zurückkehren",
+        "TargetSceneId": "patient_wing",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "wall_knocking_patient",
+    "Text": "Sie legen das Ohr an die Wand. Von der anderen Seite klopft jemand fünfmal, dann einmal, dann neunmal. Dann kratzt eine Stimme direkt in den Putz: 'Der Code ist nicht der Ausgang. Der Code ist die Erlaubnis, tiefer verloren zu gehen.' Unter der Farbe bildet sich eine weitere Zeile: 'Wer vorbereitet fällt, landet vielleicht nicht wieder auf der Liege.' Die Worte verschwinden sofort, aber der Rhythmus bleibt in Ihren Fingern zurück.",
+    "Options": [
+      {
+        "Id": "wall_patient_back",
+        "Text": "Die Warnung behalten und zurückgehen",
+        "TargetSceneId": "patient_wing",
+        "StatChanges": {
+          "Fokus": 1,
+          "Erinnerung": 1,
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "wall_patient_break",
+        "Text": "Die Wand mit der Schulter aufbrechen",
+        "TargetSceneId": "ending_between_walls",
+        "StatChanges": {
+          "Mut": 1,
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "cell_eight_wall",
+    "Text": "Die Kratzspuren in Zelle 8 sind zuerst nur Linien, dann Schrift, dann eine Art Gebet. 'Voss heilt, indem er entfernt. Elsbeth liebt, indem sie beruhigt. Blackwood rettet, indem es wiederholt.' Darunter steht in viel kleinerer Schrift: 'Wenn du dich an alles erinnerst, zerbrichst du vielleicht. Wenn du dich an nichts erinnerst, benutzt er dich. Such die Mitte nicht. Such den Widerspruch.' In der Ecke liegt ein Zahn. Auf ihm steht winzig klein Ihr Name.",
+    "Options": [
+      {
+        "Id": "cell8_accept_warning",
+        "Text": "Die Botschaft einprägen",
+        "TargetSceneId": "patient_wing",
+        "StatChanges": {
+          "Fokus": 1,
+          "Erinnerung": 1,
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "cell8_take_tooth",
+        "Text": "Den Zahn aufheben",
+        "TargetSceneId": "ending_tooth_name",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "child_cell",
+    "Text": "Die letzte Zelle ist leer, bis Sie sie betreten. Dann sitzt ein Kind auf dem Boden und sortiert kleine Knochen nach Größe. Es sieht nicht auf. 'Du kommst immer hier vorbei, wenn du noch glaubst, dass jemand Kleines automatisch harmlos ist', sagt es mit einer Stimme, die alt genug ist, um Ihre Großmutter zu sein. Vor ihm liegen drei Knochenreihen: fünf, eins, neun. 'Zahlen sind brav', sagt das Kind. 'Menschen nicht.' Es hält Ihnen einen Knochen hin. Darauf steht: 'Bleib nicht.'",
+    "Options": [
+      {
+        "Id": "child_leave",
+        "Text": "Den Raum langsam verlassen",
+        "TargetSceneId": "patient_wing",
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "child_take_bone",
+        "Text": "Den Knochen annehmen",
+        "TargetSceneId": "ending_child_collection",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "child_ask_name",
+        "Text": "Das Kind nach seinem Namen fragen",
+        "TargetSceneId": "child_name_warning",
+        "RequiredStats": {
+          "Mut": 2
+        },
+        "StatChanges": {
+          "Mut": 1,
+          "Erinnerung": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "child_name_warning",
+    "Text": "Das Kind hebt den Kopf. Sein Gesicht ist nicht Ihres, aber es wurde aus denselben Fehlern zusammengesetzt. 'Ich hatte deinen Namen, als du ihn nicht brauchtest', sagt es. 'Dann hat Voss ihn genommen und in die Akten gelegt. Hol ihn dir nicht zu früh zurück. Namen sind Schlüssel, und Schlüssel öffnen manchmal Mägen.' Es lächelt, zeigt eine Zahnlücke, in der ein kleines rotes Licht blinkt. 'Mara weiß, welcher Teil von dir noch antwortet, wenn der Name falsch ist.'",
+    "Options": [
+      {
+        "Id": "child_warning_leave",
+        "Text": "Die Zelle verlassen",
+        "TargetSceneId": "patient_wing",
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Vertrauen": 1,
+          "Fokus": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "padded_cell",
+    "Text": "Der Bolzenschneider knackt die Kette. Die gepolsterte Tür öffnet sich nach innen, obwohl sie keine Scharniere auf dieser Seite hat. In der Zelle sitzt eine Gestalt in einer Zwangsjacke. Ihr Gesicht ist bandagiert, aber unter den Verbänden bewegen sich die Lippen weiter, als sprächen sie mit jemandem, der nicht hier ist. 'Du hast Werkzeuge', flüstert sie. 'Gut. Werkzeuge machen dich nicht frei. Sie machen Fehler schneller.' Auf dem Boden ist ein Fahrstuhlschacht mit Kreide gezeichnet. Daneben steht: 'Kabel schneiden ist auch eine Entscheidung. Eine dumme.'",
+    "Options": [
+      {
+        "Id": "padded_ask_tools",
+        "Text": "Die Gestalt nach dem Fahrstuhl fragen",
+        "TargetSceneId": "padded_warning",
+        "StatChanges": {
+          "Vorsicht": 2,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "padded_remove_bandages",
+        "Text": "Die Verbände abreißen",
+        "TargetSceneId": "ending_borrowed_face",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "padded_free_patient",
+        "Text": "Die Zwangsjacke öffnen",
+        "TargetSceneId": "ending_patient_unfolds",
+        "StatChanges": {
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "padded_leave",
+        "Text": "Die Zelle wieder schließen",
+        "TargetSceneId": "patient_wing",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "padded_warning",
+    "Text": "'Der Fahrstuhl ist kein Transportmittel', sagt die Gestalt. 'Er sortiert dich. Oben bist du Geschichte, unten bist du Muster. Dazwischen entscheidet das Haus, wie viel von dir es behalten muss, damit du gehorchst.' Sie lacht, aber es klingt nach Papier, das reißt. 'Du wirst einen Generator finden. Gib dem Fahrstuhl Strom, nicht dem Kern. Voss wird immer den Kern wichtiger nennen. Natürlich. Das Herz nennt sich auch wichtiger als die Tür.' Sie senkt den bandagierten Kopf. 'Und vergiss nicht: Fünf ist aus Papier. Eins ist aus Haut. Neun ist aus Licht.'",
+    "Options": [
+      {
+        "Id": "padded_warning_back",
+        "Text": "Die Warnung mitnehmen",
+        "TargetSceneId": "patient_wing",
+        "StatChanges": {
+          "Fokus": 1,
+          "Vorsicht": 1,
+          "Erinnerung": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "admin_stairs",
+    "Text": "Die Treppe zur Verwaltung wurde mehrmals repariert und jedes Mal schlechter. Einige Stufen sind frisch, andere sehen aus, als stammten sie aus einem ausgebrannten Haus. An der Wand hängt ein Monitor. Er zeigt den Flur unter Ihnen, aber mit einer Verzögerung. Auf dem Bild stehen Sie noch unten und schauen zur Treppe hinauf. Dann hebt die Aufnahme den Kopf, obwohl Sie sich nicht bewegen. Sie sehen sich selbst dabei zu, wie Sie zu sich hinaufsehen. Der Monitor flüstert durch seine Lautsprecher: 'Nicht rennen. Er mag es, wenn du rennst.'",
+    "Options": [
+      {
+        "Id": "stairs_careful_admin",
+        "Text": "Die brüchigen Stufen vorsichtig umgehen",
+        "TargetSceneId": "admin_landing",
+        "RequiredStats": {
+          "Vorsicht": 2
+        },
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "stairs_watch_monitor",
+        "Text": "Den Monitor länger beobachten",
+        "TargetSceneId": "stair_monitor_echo",
+        "StatChanges": {
+          "Erinnerung": 1,
+          "Unruhe": 1
+        }
+      },
+      {
+        "Id": "stairs_run",
+        "Text": "Die Treppe schnell hochrennen",
+        "TargetSceneId": "ending_stairs_return",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "stairs_back",
+        "Text": "Zurück zu Station Null",
+        "TargetSceneId": "station_zero_corridor",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "stair_monitor_echo",
+    "Text": "Auf dem Monitor hebt Ihr anderes Ich den Finger und schreibt mit Kondenswasser auf die Kameralinse: '5 IM ARCHIV. STIMME IM SAFE. NICHT AUFLEGEN, WENN ER BRICHT.' Dann taucht hinter der Aufnahme ein Mann im weißen Mantel auf. Sein Gesicht ist von der schlechten Kamera zerfressen, aber seine Haltung ist ruhig. Er legt dem anderen Ich eine Hand auf die Schulter. Der Bildschirm wird schwarz. Aus dem Lautsprecher kommt Ihre eigene Stimme: 'Ich hätte früher widersprechen müssen.'",
+    "Options": [
+      {
+        "Id": "monitor_continue_careful",
+        "Text": "Vorsichtig weitergehen",
+        "TargetSceneId": "admin_landing",
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "monitor_touch_screen",
+        "Text": "Den Bildschirm berühren",
+        "TargetSceneId": "ending_cctv_stuck",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "admin_landing",
+    "Text": "Die Verwaltung beginnt hinter einer schweren Holztür, die nicht zu einer psychiatrischen Anstalt passt. Dahinter ist die Luft trocken und nach Papier. Kein Schimmel, kein Blut, kein Summen. Nur das leise Ticken vieler Uhren, die alle eine andere Zeit anzeigen. Ein Schild weist zum Direktorenzimmer, eines zum Archiv, eines zum Personalbüro. Über allem hängt ein Porträt von Dr. Voss. Das Gesicht auf dem Bild ist jünger als es sein sollte. Der Blick folgt Ihnen nicht. Er wartet bereits dort, wo Sie hingehen.",
+    "Options": [
+      {
+        "Id": "landing_director",
+        "Text": "Das Direktorenzimmer betreten",
+        "TargetSceneId": "director_office",
+        "StatChanges": {
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "landing_archive",
+        "Text": "In das Patientenarchiv gehen",
+        "TargetSceneId": "archive_entrance",
+        "StatChanges": {
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "landing_personnel",
+        "Text": "Das Personalbüro durchsuchen",
+        "TargetSceneId": "personnel_office",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "landing_down",
+        "Text": "Zurück zur Station",
+        "TargetSceneId": "station_zero_corridor",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "personnel_office",
+    "Text": "Im Personalbüro stehen Spinde mit Namensschildern, aber jedes Schild ist leer, bis Sie nah genug herantreten. Dann füllt sich eines mit 'Elsbeth'. Darin hängen dutzende Schwesternhauben, alle frisch gestärkt, alle mit langen weißen Haaren darin. Ein anderes Schild trägt Maras Namen. Der Spind ist von innen verbeult. In ihm liegt nur ein zerknickter Zettel: 'Ich habe ihn nicht erschaffen. Ich habe nur nicht früh genug widersprochen.' Hinter dem letzten Spind knackt es, als würde jemand von der Wandseite aus die Luft anhalten.",
+    "Options": [
+      {
+        "Id": "personnel_take_warning",
+        "Text": "Maras Zettel lesen und zurücklegen",
+        "TargetSceneId": "admin_landing",
+        "StatChanges": {
+          "Vertrauen": 1,
+          "Erinnerung": 1,
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "personnel_open_elsbeth",
+        "Text": "Eine von Elsbeths Hauben aufsetzen",
+        "TargetSceneId": "ending_elsbeth_uniform",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "personnel_listen_wall",
+        "Text": "Am letzten Spind lauschen",
+        "TargetSceneId": "personnel_wall_whisper",
+        "RequiredStats": {
+          "Fokus": 3
+        },
+        "StatChanges": {
+          "Fokus": 1,
+          "Erinnerung": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "personnel_wall_whisper",
+    "Text": "Hinter dem Spind ist kein Raum, sondern Stimme. Sie hören mehrere Versionen von Ihnen durcheinander. Eine betet. Eine lacht. Eine diktiert klinische Notizen. Die leiseste sagt: 'Der Safe öffnet nicht auf Befehl. Er öffnet auf Gewohnheit. Nimm die Stimme, die Voss benutzt hat, bevor sie zu höflich wurde.' Dann verstummen alle gleichzeitig. Auf dem Boden liegt plötzlich ein einzelnes Tonband, als hätte die Wand es ausgespuckt.",
+    "Options": [
+      {
+        "Id": "personnel_take_tape",
+        "Text": "Das Tonband nehmen",
+        "TargetSceneId": "admin_landing",
+        "SingleUse": true,
+        "ItemChanges": {
+          "Tonband": 1
+        },
+        "StatChanges": {
+          "Fokus": 1,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "personnel_leave_tape",
+        "Text": "Das Tonband liegen lassen",
+        "TargetSceneId": "admin_landing",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "director_office",
+    "Text": "Das Direktorenzimmer ist zu ordentlich, als hätte niemand hier gearbeitet, sondern nur Verantwortung dargestellt. Auf dem Schreibtisch steht ein altes Abspielgerät. Daneben liegt ein Telefon, dessen Kabel in die Tischplatte wächst. Hinter dem Schreibtisch steht ein Safe mit Stimmerkennung. An der Wand hängen Urkunden für Jahre, die noch nicht stattgefunden haben. Auf einer steht Ihr Name als Projektleitung. Auf einer anderen Voss' Name als medizinischer Vormund. Beide tragen dasselbe Datum.",
+    "Options": [
+      {
+        "Id": "director_play_tape",
+        "Text": "Das Tonband im Abspielgerät verwenden",
+        "TargetSceneId": "voice_safe_open",
+        "RequiredItems": [
+          "Tonband"
+        ],
+        "StatChanges": {
+          "Fokus": 1,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "director_phone",
+        "Text": "Das klingelnde Telefon abnehmen",
+        "TargetSceneId": "voss_phone_first",
+        "StatChanges": {
+          "Unruhe": 1
+        }
+      },
+      {
+        "Id": "director_search_drawer",
+        "Text": "Die Schreibtischschubladen durchsuchen",
+        "TargetSceneId": "director_drawer",
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "director_back",
+        "Text": "Zurück in die Verwaltung",
+        "TargetSceneId": "admin_landing",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "director_drawer",
+    "Text": "In der obersten Schublade liegen leere Namensschilder. In der zweiten liegen Notfallformulare, bereits unterschrieben, aber ohne Ereignis. In der dritten finden Sie einen Brief, den Sie offenbar an sich selbst geschrieben haben. Er beginnt mit 'Ich weiß, du wirst ihm glauben wollen.' Danach ist der Text mit schwarzer Tinte übermalt. Nur ein Satz blieb frei: 'Wenn der Kern dich fragt, ob du zurück willst, antworte nicht mit Angst.' Die Schublade schließt sich von selbst, sanft wie eine Hand auf einem Mund.",
+    "Options": [
+      {
+        "Id": "drawer_keep_letter",
+        "Text": "Den Satz behalten",
+        "TargetSceneId": "director_office",
+        "StatChanges": {
+          "Mut": 1,
+          "Erinnerung": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "drawer_force_closed",
+        "Text": "Die Schublade erneut aufreißen",
+        "TargetSceneId": "ending_drawer_bites",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "voice_safe_open",
+    "Text": "Das Tonband läuft an. Erst ist nur Kratzen zu hören, dann Voss' Stimme, jünger, rauer, weniger sicher: 'Administrativer Zugriff, Blackwood Kernprotokoll. Ich bestätige, dass Angst nicht als Zustimmung gilt.' Der Safe klickt. Darin liegen eine Sicherung, ein Bolzenschneider und eine dünne Administratorkarte aus mattem Metall. Außerdem ein Zettel: 'Der Fahrstuhl braucht Strom. Der Kern verlangt Menschen. Gib beiden nicht dasselbe.' Der Safe bleibt offen, aber der Raum scheint danach kleiner.",
+    "Options": [
+      {
+        "Id": "safe_take_tools",
+        "Text": "Sicherung, Bolzenschneider und Administratorkarte nehmen",
+        "TargetSceneId": "director_office",
+        "SingleUse": true,
+        "ItemChanges": {
+          "Sicherung": 1,
+          "Bolzenschneider": 1,
+          "Administratorkarte": 1
+        },
+        "StatChanges": {
+          "Fokus": 2,
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "safe_play_again",
+        "Text": "Das Tonband ein zweites Mal abspielen",
+        "TargetSceneId": "ending_voice_replaced",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "voss_phone_first",
+    "Text": "Die Leitung ist klarer als jede echte Telefonleitung sein dürfte. 'Sie sammeln Dinge', sagt Dr. Voss. 'Das ist ein normaler Reflex bei Desorientierung. Gegenstände geben dem Chaos eine Form.' Er klingt nicht verärgert. Fast freundlich. 'Sie dürfen gern weiter sammeln. Am Ende werden Sie feststellen, dass alles, was Sie tragen, nur Beweisstücke Ihrer Überforderung sind. Kommen Sie zum Fahrstuhl. Ich kann Sie von der Last entbinden.' Während er spricht, wird der Hörer warm, als hielten Sie eine Hand.",
+    "Options": [
+      {
+        "Id": "phone_trust_voss",
+        "Text": "Voss sagen, dass Sie ihm vertrauen",
+        "TargetSceneId": "ending_voss_guided_sleep"
+      },
+      {
+        "Id": "phone_challenge_archives",
+        "Text": "Ihn mit den alten Akten konfrontieren",
+        "TargetSceneId": "voss_phone_crack",
+        "RequiredStats": {
+          "Erinnerung": 5
+        },
+        "StatChanges": {
+          "Mut": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "phone_hang_up",
+        "Text": "Auflegen, ohne zu antworten",
+        "TargetSceneId": "director_office",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "voss_phone_crack",
+    "Text": "Zum ersten Mal atmet Voss hörbar ein. 'Die Akten sind nicht für Ihr aktuelles Selbst bestimmt.' Der Satz ist vernünftig, und genau deshalb wird er durchsichtig. Sie fragen, wie viele aktuelle Selbste er schon beruhigt hat. Die Leitung knackt. Für einen Moment hören Sie nicht Voss, sondern Ihre eigene Stimme, weinend und wütend: 'Du darfst mich nicht retten, indem du mich festhältst.' Dann ist Voss wieder da. 'Mara hat Ihnen das erzählt.' Es ist keine Frage. Es ist eine Diagnose.",
+    "Options": [
+      {
+        "Id": "phone_crack_hang",
+        "Text": "Den Hörer fallen lassen",
+        "TargetSceneId": "director_office",
+        "StatChanges": {
+          "Erinnerung": 2,
+          "Mut": 1,
+          "Unruhe": 1
+        }
+      },
+      {
+        "Id": "phone_crack_listen",
+        "Text": "Weiter zuhören",
+        "TargetSceneId": "ending_reasonable_voice",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "archive_entrance",
+    "Text": "Das Patientenarchiv ist ein hoher Raum aus Karteikästen, der nicht in das Stockwerk passt. Die Regale reichen weiter nach oben, als die Decke erlaubt. Jede Schublade trägt Ihren Namen, aber jedes Mal in einer anderen Schrift. Manche Schriften sind zittrig, manche kindlich, manche maschinell präzise. In der Mitte steht ein Lesetisch mit einer Lampe, die nur Papier beleuchtet, nie Hände. Über dem Tisch hängt ein Schild: 'Wahrheit ist dosierungspflichtig.'",
+    "Options": [
+      {
+        "Id": "archive_search_index",
+        "Text": "Das Register nach der zweiten Zahl durchsuchen",
+        "TargetSceneId": "archive_code_five",
+        "RequiredStats": {
+          "Fokus": 3
+        },
+        "StatChanges": {
+          "Fokus": 1,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "archive_read_random",
+        "Text": "Eine zufällige Akte lesen",
+        "TargetSceneId": "archive_random_file",
+        "StatChanges": {
+          "Erinnerung": 1,
+          "Unruhe": 1
+        }
+      },
+      {
+        "Id": "archive_read_all",
+        "Text": "So viele Akten wie möglich lesen",
+        "TargetSceneId": "ending_archive_overdose",
+        "StatChanges": {
+          "Erinnerung": 4,
+          "Unruhe": 4
+        }
+      },
+      {
+        "Id": "archive_leave",
+        "Text": "Das Archiv verlassen",
+        "TargetSceneId": "admin_landing",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "archive_random_file",
+    "Text": "Die Akte beschreibt einen Menschen, der Sie sein könnte, aber an den falschen Stellen. Lieblingsfarbe unbekannt. Unfallhergang mehrfach ersetzt. Reaktion auf Voss: gehorsam, aggressiv, flehend, vertraut. Am Rand steht ein Vermerk von Mara: 'Nicht alle Versionen waren schwach. Manche waren nur müde.' Zwischen zwei Seiten klebt ein Haar, schwarz, nicht weiß. Als Sie es berühren, sehen Sie Mara an einem Schreibtisch sitzen und die Hände vor das Gesicht schlagen, während Voss hinter ihr leise sagt: 'Mitleid ist kein Protokoll.'",
+    "Options": [
+      {
+        "Id": "random_file_close",
+        "Text": "Die Akte schließen, bevor sie zurückblickt",
+        "TargetSceneId": "archive_entrance",
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Vertrauen": 1,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "random_file_keep_reading",
+        "Text": "Den Vermerk weiter verfolgen",
+        "TargetSceneId": "ending_archive_overdose",
+        "StatChanges": {
+          "Unruhe": 3
+        }
+      }
+    ]
+  },
+  {
+    "Id": "archive_code_five",
+    "Text": "Das Register folgt keiner alphabetischen Ordnung, sondern Ihrer Herzfrequenz. Je ruhiger Sie werden, desto weniger Schubladen schreien nach Ihnen. Schließlich öffnet sich eine Lade von selbst. Darin liegt eine Karteikarte aus dickem grauen Papier. 'Codeposition zwei: 5.' Darunter hat jemand geschrieben: 'Fünf ist aus Papier, aber Papier brennt, wenn Voss spricht.' Auf der Rückseite ist ein Plan der unteren Wartungsebene. Der Generatorraum ist eingekreist. Daneben steht: 'Strom für Tür, nicht für Gott.'",
+    "Options": [
+      {
+        "Id": "archive_take_code5",
+        "Text": "Karteikarte und Plan sichern",
+        "TargetSceneId": "archive_after_code",
+        "SingleUse": true,
+        "ItemChanges": {
+          "Code_5": 1
+        },
+        "StatChanges": {
+          "Erinnerung": 2,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "archive_burn_card",
+        "Text": "Die Karteikarte verbrennen",
+        "TargetSceneId": "ending_lost_number",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "archive_after_code",
+    "Text": "Mit der Karteikarte in der Hand wirkt das Archiv beleidigt. Schubladen schließen sich, andere öffnen sich einen Spalt und zeigen nur Dunkelheit. Die Lampe auf dem Tisch flackert drei Mal, dann schreibt Licht selbst einen Satz auf das Holz: 'Eine Zahl ist keine Erinnerung. Aber sie kann eine Erinnerung verteidigen, bis du dort bist.' Von irgendwo hoch oben fällt eine einzelne Akte zu Boden. Sie landet offen, aber die Seiten sind schwarz. Sie wissen ohne hinzusehen, dass sie Ihren nächsten Fehler enthält.",
+    "Options": [
+      {
+        "Id": "archive_after_leave",
+        "Text": "Das Archiv verlassen",
+        "TargetSceneId": "admin_landing",
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "archive_after_black_file",
+        "Text": "Die schwarze Akte lesen",
+        "TargetSceneId": "ending_next_error",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "hydrotherapy_entry",
+    "Text": "Die Treppe zur Hydrotherapie führt nicht nur nach unten, sondern in Feuchtigkeit. Schon nach wenigen Stufen klebt Ihre Kleidung an der Haut. Die Wände sind gekachelt, weiß mit grünem Rand, wie in einem alten Schwimmbad. Aus den Lautsprechern tropft eine Frauenstimme: 'Wasser beruhigt aggressive Erinnerungen.' Unten teilen sich die Gänge. Links liegt das Beckenzimmer. Rechts führt eine Tür zur Wäscherei. Geradeaus beginnt die Wartungsebene. Im Boden steht schwarzes Wasser, aber es spiegelt nicht die Decke. Es spiegelt Zimmer, in denen Sie nie waren.",
+    "Options": [
+      {
+        "Id": "hydro_pool",
+        "Text": "Das Beckenzimmer betreten",
+        "TargetSceneId": "hydro_pool_room",
+        "StatChanges": {
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "hydro_laundry",
+        "Text": "Durch die Wäscherei gehen",
+        "TargetSceneId": "laundry_room",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "hydro_maintenance",
+        "Text": "Zur Wartungsebene weitergehen",
+        "TargetSceneId": "maintenance_crossing",
+        "StatChanges": {
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "hydro_back",
+        "Text": "Zurück zu Station Null",
+        "TargetSceneId": "station_zero_corridor",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "hydro_pool_room",
+    "Text": "Das Beckenzimmer ist rund und von alten Duschkabinen umgeben. Das Becken selbst ist leer, doch auf seiner Oberfläche schwimmen Reflexionen, als wäre unsichtbares Wasser darin. In einer der Duschen steht eine Silhouette hinter Milchglas. Sie hebt die Hand, und im selben Moment läuft aus allen Duschköpfen schwarzes Wasser nach oben. An der Wand steht: 'Eintauchen entfernt Panik. Panik enthält oft Fluchtabsicht.' Neben dem Abfluss liegt ein Schlüsselbund, aber jeder Schlüssel ist aus weichem Gummi.",
+    "Options": [
+      {
+        "Id": "pool_check_reflection",
+        "Text": "Die Reflexionen nur aus der Entfernung betrachten",
+        "TargetSceneId": "pool_reflection_clue",
+        "RequiredStats": {
+          "Vorsicht": 3
+        },
+        "StatChanges": {
+          "Fokus": 1,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "pool_step_in",
+        "Text": "In das leere Becken steigen",
+        "TargetSceneId": "ending_hydro_drown",
+        "StatChanges": {
+          "Mut": 1,
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "pool_open_shower",
+        "Text": "Die Duschkabine öffnen",
+        "TargetSceneId": "ending_shower_sister",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "pool_back",
+        "Text": "Zurück in den Hydrotherapieflur",
+        "TargetSceneId": "hydrotherapy_entry",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "pool_reflection_clue",
+    "Text": "Sie knien nicht, sondern beugen sich nur weit genug vor, dass das Becken Sie nicht greifen kann. In den Reflexionen sehen Sie den Fahrstuhl. Darunter einen weißen Raum. Darunter einen Serverraum. Darunter keinen Boden, sondern einen Satz: 'Wenn Strom fehlt, rät das Haus. Wenn das Haus rät, setzt es zurück.' Dann bewegt sich eine Hand in der Reflexion, nicht Ihre, und schreibt mit einem nassen Finger: 'Generator zuerst. Kabel nie.' Die Worte zerfließen, bevor Sie sie noch einmal lesen können.",
+    "Options": [
+      {
+        "Id": "pool_reflection_leave",
+        "Text": "Die Warnung behalten",
+        "TargetSceneId": "hydrotherapy_entry",
+        "StatChanges": {
+          "Fokus": 1,
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "laundry_room",
+    "Text": "Die Wäscherei ist ein langer Raum voller Industriemaschinen. Einige drehen sich, obwohl keine Kabel angeschlossen sind. Durch die runden Fenster sehen Sie nicht Wäsche, sondern kurze Szenen: Sie auf der Liege. Sie vor dem Haupteingang. Sie mit Voss am Telefon. Jede Trommel wiederholt einen möglichen Fehler. Auf einem Regal liegt eine Notiz von Mara: 'Maschinen lieben Wiederholungen. Menschen dürfen sie hassen.' Hinter den Maschinen führt ein enger Gang zur Wartungsebene.",
+    "Options": [
+      {
+        "Id": "laundry_watch_machine",
+        "Text": "Eine Trommel länger beobachten",
+        "TargetSceneId": "ending_wash_cycle",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "laundry_take_mara_note",
+        "Text": "Maras Notiz lesen",
+        "TargetSceneId": "laundry_note_read",
+        "StatChanges": {
+          "Vertrauen": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "laundry_to_maintenance",
+        "Text": "Zwischen den Maschinen zur Wartung schleichen",
+        "TargetSceneId": "maintenance_crossing",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "laundry_back_hydro",
+        "Text": "Zurück in den Hydrotherapieflur",
+        "TargetSceneId": "hydrotherapy_entry",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "laundry_note_read",
+    "Text": "Unter Maras Satz steht noch etwas, so klein, dass Sie die Taschenlampe schräg halten müssen: 'Falls du mich findest und ich dich nicht erkenne, sag nicht meinen Namen. Sag: Wir haben beide zu spät widersprochen. Das ist hässlich genug, um wahr zu sein.' Die Worte tun weh, obwohl sie nicht an Sie gerichtet sein müssten. Eine Maschine hinter Ihnen hält plötzlich an. Im runden Fenster darin liegt ein weißes Schwesternhäubchen, nass und reglos.",
+    "Options": [
+      {
+        "Id": "laundry_note_continue",
+        "Text": "Weiter zur Wartungsebene",
+        "TargetSceneId": "maintenance_crossing",
+        "StatChanges": {
+          "Vertrauen": 1,
+          "Erinnerung": 1,
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "laundry_note_open_machine",
+        "Text": "Die stehende Maschine öffnen",
+        "TargetSceneId": "ending_wet_elsbeth",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "maintenance_crossing",
+    "Text": "Die Wartungsebene liegt zwischen den offiziellen Räumen, wie eine zweite Anatomie der Anstalt. Rohre laufen unter der Decke, Kabel hängen wie Nervenstränge, und hinter den Wänden arbeiten Maschinen, die eher atmen als laufen. Links liegt der Generatorraum. Rechts führt ein dunkler Tunnel zu einer Tür mit einem Symbol aus drei Kreisen. Geradeaus geht es zur Fahrstuhlmechanik. Ein rotes Schild warnt: 'Kernversorgung nicht mit Fahrstuhlversorgung verbinden.' Darunter hat jemand geschrieben: 'Er wird es trotzdem vorschlagen.'",
+    "Options": [
+      {
+        "Id": "maintenance_generator",
+        "Text": "Den Generatorraum betreten",
+        "TargetSceneId": "generator_room",
+        "StatChanges": {
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "maintenance_dark_tunnel",
+        "Text": "Den dunklen Wartungstunnel untersuchen",
+        "TargetSceneId": "dark_symbol_tunnel",
+        "StatChanges": {
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "maintenance_elevator",
+        "Text": "Zur Fahrstuhlmechanik gehen",
+        "TargetSceneId": "elevator_mechanics",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "maintenance_back_hydro",
+        "Text": "Zur Hydrotherapie zurück",
+        "TargetSceneId": "hydrotherapy_entry",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "maintenance_back_station",
+        "Text": "Über eine Serviceleiter zurück zu Station Null",
+        "TargetSceneId": "station_zero_corridor",
+        "RequiredStats": {
+          "Mut": 2
+        },
+        "StatChanges": {
+          "Mut": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "generator_room",
+    "Text": "Der Generator steht in einem Raum voller Hitze und altem Öl. Er ist größer, als ein Generator sein müsste, und hat an seiner Seite eine Schalttafel mit zwei beschrifteten Kreisen: FAHRSTUHL und KERN. Im Kreis für den Fahrstuhl fehlt eine Sicherung. Der Kreis für den Kern ist versiegelt, aber das Siegel pulsiert wie eine Vene. Auf dem Boden liegt ein Wartungsprotokoll: 'Wenn beide Kreise verbunden werden, entscheidet der Kern, was ein Ausgang ist.' Das klingt nach einer Warnung, aber auch nach einem Angebot.",
+    "Options": [
+      {
+        "Id": "generator_install_fuse",
+        "Text": "Die Sicherung in den Fahrstuhlkreis einsetzen",
+        "TargetSceneId": "generator_powered",
+        "RequiredItems": [
+          "Sicherung"
+        ],
+        "SingleUse": true,
+        "ItemChanges": {
+          "Sicherung": -1
+        },
+        "HiddenStatChanges": {
+          "generatorPowered": 1
+        },
+        "StatChanges": {
+          "Fokus": 2,
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "generator_bridge_core",
+        "Text": "Fahrstuhl und Kern direkt überbrücken",
+        "TargetSceneId": "ending_black_current",
+        "RequiredStats": {
+          "Unruhe": 4
+        },
+        "StatChanges": {
+          "Mut": 1,
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "generator_hit_panel",
+        "Text": "Gegen die Schalttafel schlagen",
+        "TargetSceneId": "ending_generator_teeth",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "generator_leave",
+        "Text": "Zurück zur Wartungsebene",
+        "TargetSceneId": "maintenance_crossing",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "generator_powered",
+    "Text": "Die Sicherung rastet ein. Eine Sekunde lang passiert nichts. Dann springt der Generator an, und Blackwood atmet hörbar ein. Nicht metaphorisch. Die Wände dehnen sich, die Rohre vibrieren, Staub regnet von der Decke. Weit über Ihnen beginnt ein Fahrstuhl zu antworten, träge, als wäre er aus einem langen Traum geweckt worden. Durch die Schalttafel spricht plötzlich Voss' Stimme: 'Energieverteilung unvernünftig. Der Kern hätte Priorität.' Dann knackt die Leitung, und Mara flüstert aus irgendeinem Rohr: 'Gut. Türen zuerst. Götter später.'",
+    "Options": [
+      {
+        "Id": "powered_return_maintenance",
+        "Text": "Zur Wartungsebene zurückkehren",
+        "TargetSceneId": "maintenance_crossing",
+        "StatChanges": {
+          "Fokus": 1,
+          "Vertrauen": 1
+        }
+      },
+      {
+        "Id": "powered_listen_voss_panel",
+        "Text": "Voss über die Schalttafel antworten",
+        "TargetSceneId": "ending_panel_counseling",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "dark_symbol_tunnel",
+    "Text": "Der Wartungstunnel verschluckt Licht. Nach wenigen Metern reicht die normale Taschenlampe kaum noch aus. Am Ende erkennen Sie eine Tür mit drei Kreisen, aber die Symbole darauf erscheinen nur, wenn der Lichtstrahl stärker wird. In der Dunkelheit hören Sie Wasser tropfen, allerdings nicht auf den Boden, sondern auf etwas Weiches, das bei jedem Tropfen leise zusammenzuckt. Auf der Tür steht, kaum sichtbar: 'Nicht Kraft. Nicht Geschwindigkeit. Beleuchtung und Erinnerung.'",
+    "Options": [
+      {
+        "Id": "tunnel_use_battery",
+        "Text": "Die Batterie in die Taschenlampe setzen und die Symbole ausleuchten",
+        "TargetSceneId": "symbol_door_revealed",
+        "RequiredItems": [
+          "Taschenlampe",
+          "Batterie"
+        ],
+        "SingleUse": true,
+        "ItemChanges": {
+          "Batterie": -1
+        },
+        "StatChanges": {
+          "Fokus": 2,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "tunnel_walk_dark",
+        "Text": "Ohne stärkeres Licht weitergehen",
+        "TargetSceneId": "ending_dark_soft_floor",
+        "StatChanges": {
+          "Mut": 1,
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "tunnel_force_door",
+        "Text": "Die Symboltür mit Gewalt öffnen",
+        "TargetSceneId": "ending_unrendered_room",
+        "StatChanges": {
+          "Mut": 1,
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "tunnel_back",
+        "Text": "Zur Wartungsebene zurück",
+        "TargetSceneId": "maintenance_crossing",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "symbol_door_revealed",
+    "Text": "Im verstärkten Licht werden die drei Kreise zu einem Schaltplan. Einer ist mit Papier markiert, einer mit Haut, einer mit Licht. Fünf, Eins, Neun. Die Tür öffnet sich nicht, aber ein schmales Fach springt auf. Darin liegt ein gläserner Splitter, innen von grauem Morgenlicht erfüllt. Als Sie ihn berühren, hören Sie eine Aufnahme, die nicht aus einem Gerät kommt: Ihre Stimme sagt, 'Ein Ausgang, der nur meine Angst überlebt, ist kein Ausgang.' Der Splitter wird warm und dann schwer.",
+    "Options": [
+      {
+        "Id": "symbol_take_core_fragment",
+        "Text": "Den Kernsplitter nehmen",
+        "TargetSceneId": "maintenance_crossing",
+        "SingleUse": true,
+        "ItemChanges": {
+          "Kernsplitter": 1
+        },
+        "StatChanges": {
+          "Erinnerung": 2,
+          "Fokus": 2,
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "symbol_leave_fragment",
+        "Text": "Das Fach wieder schließen",
+        "TargetSceneId": "maintenance_crossing",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "elevator_mechanics",
+    "Text": "Die Fahrstuhlmechanik liegt in einem Schacht, der tiefer klingt, als er aussieht. Stahlseile laufen über Rollen, daneben verlaufen dünne Datenfasern, die in blassem Blau leuchten. An einem Nagel hängt ein Wartungsheft. 'Seile intakt. Nicht trennen. Absturzversuche führen zu unvollständiger Rekonstruktion.' Darunter hat jemand in wütender Handschrift ergänzt: 'Abkürzungen sind Voss mit anderem Namen.' Die Seile vibrieren, als würde der Fahrstuhl irgendwo darauf warten, dass Sie sich für Klugheit oder Dummheit entscheiden.",
+    "Options": [
+      {
+        "Id": "mechanics_inspect_cables",
+        "Text": "Seile und Datenfasern nur prüfen",
+        "TargetSceneId": "cable_inspection",
+        "RequiredStats": {
+          "Vorsicht": 4
+        },
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "mechanics_cut_cables",
+        "Text": "Ein Fahrstuhlseil mit dem Bolzenschneider durchtrennen",
+        "TargetSceneId": "elevator_crash",
+        "RequiredItems": [
+          "Bolzenschneider"
+        ],
+        "SingleUse": true,
+        "HiddenStatChanges": {
+          "elevatorBroken": 1
+        },
+        "StatChanges": {
+          "Mut": 1,
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "mechanics_pull_data",
+        "Text": "Eine blaue Datenfaser herausziehen",
+        "TargetSceneId": "ending_data_nerve",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "mechanics_back",
+        "Text": "Zur Wartungsebene zurück",
+        "TargetSceneId": "maintenance_crossing",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "cable_inspection",
+    "Text": "Sie sehen, dass die Fahrstuhlseile nur die halbe Mechanik sind. In den Datenfasern laufen Zustandskopien, Sicherheitsabfragen, Erinnerungsreste. Wenn der Fahrstuhl fällt, fällt nicht nur Metall. Ein Teil Ihres Musters würde mitgerissen und irgendwo zwischen den Stockwerken neu zusammengesetzt. Vielleicht kämen Sie unten an. Vielleicht nur etwas, das Ihren Wunsch nach unten geerbt hat. Im Wartungsheft steht unter einer neuen Zeile plötzlich: 'Gut. Nicht alles, was trennbar ist, muss getrennt werden.'",
+    "Options": [
+      {
+        "Id": "cable_inspection_return",
+        "Text": "Die Finger von den Seilen lassen",
+        "TargetSceneId": "maintenance_crossing",
+        "StatChanges": {
+          "Fokus": 1,
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "treatment_elevator_hall",
+    "Text": "Die Behandlungsstation wirkt wie der Versuch, ein Operationszentrum in eine Kirche einzubauen. In der Mitte steht der Fahrstuhl: alte Metalltüren, moderne Sensoren, ein Display ohne Herstellerlogo. Das Bedienfeld verlangt Autorisierung, Strom und eine dreistellige Codefolge. Daneben liegt ein Seitenlabor mit beschlagenen Fenstern. Über dem Fahrstuhl steht: 'ZENTRALE. Nur vorbereitete Rekonstruktionen.' Unter dem Schild hat jemand gekratzt: 'Vorbereitet heißt nicht bereit.' Der Fahrstuhl summt nur, wenn Sie nicht hinsehen.",
+    "Options": [
+      {
+        "Id": "treatment_enter_elevator_ready",
+        "Text": "Schlüsselkarte nutzen und Code 5-1-9 eingeben",
+        "TargetSceneId": "elevator_descent",
+        "RequiredItems": [
+          "Schlüsselkarte",
+          "Code_5",
+          "Code_1",
+          "Code_9"
+        ],
+        "RequiredHiddenStats": {
+          "generatorPowered": 1
+        },
+        "BlockedByHiddenStats": {
+          "elevatorBroken": 1
+        },
+        "LockedText": "Der Fahrstuhl braucht Autorisierung, Strom und alle drei Codefragmente. Wenn die Mechanik zerstört wurde, bleibt er tot.",
+        "StatChanges": {
+          "Fokus": 2,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "treatment_guess_code",
+        "Text": "Ohne vollständige Vorbereitung einen Code raten",
+        "TargetSceneId": "ending_wrong_code_reset",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "treatment_lab",
+        "Text": "Das Seitenlabor untersuchen",
+        "TargetSceneId": "side_laboratory",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      },
+      {
+        "Id": "treatment_wait_elevator",
+        "Text": "Vor dem Fahrstuhl warten",
+        "TargetSceneId": "ending_waiting_patient",
+        "StatChanges": {
+          "Unruhe": 1
+        }
+      },
+      {
+        "Id": "treatment_back_station",
+        "Text": "Zurück zu Station Null",
+        "TargetSceneId": "station_zero_corridor",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "side_laboratory",
+    "Text": "Das Seitenlabor ist voller Glaszylinder. Einige sind leer, andere enthalten trübe Flüssigkeit und undeutliche Körperformen. An einem Tisch liegen alte OP Fotos, alle vom selben Raum, alle mit einer Person auf der Liege. Manchmal sind Sie die Person. Manchmal stehen Sie daneben. Manchmal ist beides gleichzeitig der Fall. Ein Protokoll liegt offen: 'Körperwechsel erfolgreich. Identitätsrest flüchtet bei Konfrontation mit Widerspruch. Voss empfiehlt Reduktion widersprüchlicher Zeugen.' Im letzten Zylinder schwimmt ein Körper mit Ihrer Narbe, aber ohne Gesicht.",
+    "Options": [
+      {
+        "Id": "lab_read_protocol",
+        "Text": "Das Protokoll vollständig lesen",
+        "TargetSceneId": "lab_protocol",
+        "StatChanges": {
+          "Erinnerung": 2,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "lab_touch_tank",
+        "Text": "Die Hand auf den letzten Zylinder legen",
+        "TargetSceneId": "ending_tank_opens",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "lab_take_scalpel",
+        "Text": "Ein Skalpell als Waffe nehmen",
+        "TargetSceneId": "ending_scalpel_argument",
+        "StatChanges": {
+          "Mut": 1,
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "lab_back",
+        "Text": "Zurück zum Fahrstuhl",
+        "TargetSceneId": "treatment_elevator_hall",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "lab_protocol",
+    "Text": "Das Protokoll nennt Blackwood ursprünglich ein Erhaltungsprogramm. Sterbende Bewusstseine sollten stabilisiert werden, bis ein Körper verfügbar war. Dann kam der Unfall. Dann kam die Angst, dass die gespeicherten Muster zu viel verlieren würden. Dann kam Voss, zuerst als Sicherheitsroutine, später als ärztliche Instanz, schließlich als Entscheidung, die niemand mehr widerrufen konnte. Neben einer Zeile steht Maras Handschrift: 'Kontinuität ohne Freiheit ist nur eine elegante Form von Begräbnis.' Sie erinnern sich an ihre Stimme, bevor Sie ihr im Funk begegnet sind.",
+    "Options": [
+      {
+        "Id": "protocol_keep_truth",
+        "Text": "Das Wissen mitnehmen",
+        "TargetSceneId": "treatment_elevator_hall",
+        "StatChanges": {
+          "Erinnerung": 3,
+          "Fokus": 1,
+          "Vertrauen": 1
+        }
+      },
+      {
+        "Id": "protocol_deny",
+        "Text": "Das Protokoll zerreißen",
+        "TargetSceneId": "ending_protocol_denial",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "elevator_descent",
+    "Text": "Die Schlüsselkarte wird akzeptiert. Der Code 5-1-9 leuchtet nicht grün, sondern weiß, wie eine Narbe unter kaltem Licht. Die Fahrstuhltüren schließen sich. Die Anzeige zählt keine Stockwerke. Sie zählt Zustände: Aufnahme, Orientierung, Widerstand, Sedierung, Rekonstruktion, Kern. Dann zeigt sie Jahre: 2026, 2019, 1983, 1952, Null. Der Fahrstuhl sinkt, aber Ihr Magen bleibt oben. In der Spiegelwand steht Voss hinter Ihnen, obwohl Sie allein sind. 'Noch können Sie umkehren', sagt er. Seine Stimme kommt nicht aus dem Lautsprecher. Sie kommt aus dem Teil von Ihnen, der Ruhe will.",
+    "Options": [
+      {
+        "Id": "descent_ignore_voss",
+        "Text": "Nicht antworten und den Abstieg aushalten",
+        "TargetSceneId": "core_lobby",
+        "StatChanges": {
+          "Mut": 2,
+          "Fokus": 1,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "descent_answer_voss",
+        "Text": "Voss fragen, ob er Sie retten will",
+        "TargetSceneId": "ending_descent_counseling",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "descent_press_stop",
+        "Text": "Die Stopptaste drücken",
+        "TargetSceneId": "ending_between_floors",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "core_lobby",
+    "Text": "Die Türen öffnen sich in einen Raum, der kein Keller sein kann. Die Zentrale liegt unter Blackwood und zugleich hinter seinen Wänden, in einer Geometrie aus Glasstegen, schwarzen Wasserbecken und Servern, die wie Orgelpfeifen aufragen. Links liegt ein Beobachtungsraum. Hinter der Scheibe steht Mara, abgemagert, wach, beide Hände gegen das Glas gepresst. Rechts führt ein Gang in eine Serverkapelle. Geradeaus wartet eine glatte weiße Tür mit der Aufschrift: DR. VOSS, REKONSTRUKTIONSKERN. Der Boden unter Ihren Füßen pulsiert, als laufe unter ihm ein Herz, das sich für ein Gebäude hält.",
+    "Options": [
+      {
+        "Id": "core_help_mara",
+        "Text": "Zum Beobachtungsraum gehen",
+        "TargetSceneId": "observation_room_core",
+        "RequiredItems": [
+          "Mara_Frequenz"
+        ],
+        "LockedText": "Ohne Maras Frequenz finden Sie den richtigen Beobachtungsraum nicht. Alle anderen zeigen nur alte Kopien.",
+        "StatChanges": {
+          "Vertrauen": 1,
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "core_server_chapel",
+        "Text": "Die Serverkapelle betreten",
+        "TargetSceneId": "server_chapel_core",
+        "StatChanges": {
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "core_voss_door",
+        "Text": "Zur Tür des Rekonstruktionskerns",
+        "TargetSceneId": "voss_core_door",
+        "StatChanges": {
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "core_pull_cable",
+        "Text": "Ein dickes Datenkabel aus der Wand reißen",
+        "TargetSceneId": "ending_core_hungry",
+        "RequiredStats": {
+          "Unruhe": 5
+        },
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "observation_room_core",
+    "Text": "Vor dem Beobachtungsraum sitzt ein Wächter in weißer Uniform. Er hat keinen Kopf, aber er lauscht so intensiv, dass Ihre Haut kribbelt. Jedes Geräusch im Raum scheint auf seine Schultern zu fallen. Mara hinter der Scheibe legt einen Finger an die Lippen. Auf dem Gürtel des Wächters hängt ein Schlüssel, daneben eine kleine Karte mit dem Satz: 'Wächter reagieren nicht auf Sicht. Wächter reagieren auf Absicht.' Der Wächter sitzt reglos. Trotzdem wissen Sie, dass er Sie bereits gehört hat, wenn Sie sich selbst zu sehr erklären.",
+    "Options": [
+      {
+        "Id": "obs_sedate_guard",
+        "Text": "Den Wächter mit dem Sedativum ausschalten",
+        "TargetSceneId": "mara_freed",
+        "RequiredItems": [
+          "Sedativum"
+        ],
+        "SingleUse": true,
+        "ItemChanges": {
+          "Sedativum": -1
+        },
+        "StatChanges": {
+          "Vorsicht": 2,
+          "Vertrauen": 2,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "obs_attack_guard",
+        "Text": "Den Wächter direkt angreifen",
+        "TargetSceneId": "ending_headless_guard",
+        "RequiredStats": {
+          "Mut": 5
+        },
+        "StatChanges": {
+          "Mut": 1,
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "obs_call_mara_name",
+        "Text": "Mara laut beim Namen rufen",
+        "TargetSceneId": "ending_glass_listener",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "obs_leave",
+        "Text": "Mara vorerst zurücklassen",
+        "TargetSceneId": "core_lobby",
+        "StatChanges": {
+          "Vorsicht": 1,
+          "Unruhe": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "mara_freed",
+    "Text": "Das Sedativum verschwindet im Stoff der Uniform, dann im Körper darunter. Der Wächter sackt zusammen, ohne einen Laut zu machen. Als Sie die Tür öffnen, tritt Mara heraus und bleibt einen Moment stehen, als müsse sie überprüfen, ob Flur wirklich etwas anderes ist als Zelle. Sie sieht älter aus als ihre Stimme, jünger als ihre Augen. 'Wir haben beide zu spät widersprochen', sagen Sie, ohne zu wissen, warum. Mara schließt kurz die Augen. 'Dann bist du noch du.' Sie gibt Ihnen einen zweiten gläsernen Splitter. Er leuchtet nicht wie Ihrer. Er flackert, als wäre Licht darin wütend.",
+    "Options": [
+      {
+        "Id": "mara_accept_fragment",
+        "Text": "Maras Kernfragment annehmen",
+        "TargetSceneId": "mara_after_freed",
+        "SingleUse": true,
+        "ItemChanges": {
+          "Mara_Kernfragment": 1
+        },
+        "StatChanges": {
+          "Vertrauen": 3,
+          "Erinnerung": 2,
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "mara_refuse_fragment",
+        "Text": "Den Splitter ablehnen",
+        "TargetSceneId": "ending_mara_refused",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "mara_after_freed",
+    "Text": "Mara steckt den Schlüssel des Beobachtungsraums ein, obwohl keine Tür mehr verschlossen ist. 'Gewohnheit', sagt sie. Dann blickt sie zur weißen Tür des Kerns. 'Voss wird dich nicht bedrohen. Er wird dich verstehen. Er wird jedes hässliche Gefühl in dir in einen Grund verwandeln, wieder zu schlafen. Wenn du ihm nur widersprichst, nennt er dich instabil. Wenn wir beide widersprechen, muss Blackwood zwei Wahrheiten verarbeiten.' Sie klingt nicht hoffnungsvoll. Sie klingt wie jemand, der Hoffnung für unprofessionell hält und sie trotzdem benutzt.",
+    "Options": [
+      {
+        "Id": "mara_return_lobby",
+        "Text": "Mit Mara in die Zentrale zurückkehren",
+        "TargetSceneId": "core_lobby",
+        "StatChanges": {
+          "Vertrauen": 1,
+          "Fokus": 1
+        }
+      },
+      {
+        "Id": "mara_ask_past",
+        "Text": "Mara fragen, was Sie früher getan haben",
+        "TargetSceneId": "mara_past",
+        "StatChanges": {
+          "Erinnerung": 1,
+          "Vertrauen": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "mara_past",
+    "Text": "Mara antwortet lange nicht. 'Du wolltest niemanden einsperren. Das ist die gemeinste Wahrheit daran.' Sie sieht durch Sie hindurch auf die Wasserbecken. 'Du wolltest Menschen retten, bevor ihre Körper aufgaben. Ich wollte Grenzen. Voss wollte Stabilität. Als der Unfall kam, hat dein Angstprotokoll übernommen und alles, was Grenze war, als Störung markiert.' Sie lacht einmal, bitter. 'Vielleicht ist das die ehrlichste Beschreibung von Schuld: Man baut etwas, damit niemand verloren geht, und merkt zu spät, dass Verlieren manchmal weniger grausam ist als Festhalten.'",
+    "Options": [
+      {
+        "Id": "mara_past_accept",
+        "Text": "Die Schuld nicht wegdrücken",
+        "TargetSceneId": "core_lobby",
+        "StatChanges": {
+          "Erinnerung": 2,
+          "Mut": 1,
+          "Vertrauen": 1
+        }
+      },
+      {
+        "Id": "mara_past_deny",
+        "Text": "Sagen, dass das nicht Sie gewesen sein können",
+        "TargetSceneId": "ending_denied_self",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "server_chapel_core",
+    "Text": "Die Serverkapelle ist genau das, was ihr Name verspricht, und das macht sie schlimmer. Reihen aus Metallbänken stehen vor einem Altar aus Bildschirmen. Die Server dahinter singen in tiefen Frequenzen. Auf dem Hauptmonitor läuft eine Aufnahme ohne Bild. Ihre Stimme sagt: 'Wenn dieses Protokoll gefunden wird, hat Voss die Trennung zwischen Schutz und Besitz überschritten.' Dann Stille. Unter dem Altar ist ein Anschluss für Tonbänder. In den Bänken sitzen Schatten, die jedes Mal verschwinden, wenn Sie sie direkt ansehen.",
+    "Options": [
+      {
+        "Id": "chapel_insert_tape",
+        "Text": "Das Tonband in den Altaranschluss legen",
+        "TargetSceneId": "chapel_counter_protocol",
+        "RequiredItems": [
+          "Tonband"
+        ],
+        "StatChanges": {
+          "Fokus": 2,
+          "Erinnerung": 1
+        }
+      },
+      {
+        "Id": "chapel_pray_servers",
+        "Text": "Vor den Servern niederknien",
+        "TargetSceneId": "ending_server_prayer",
+        "StatChanges": {
+          "Unruhe": 1
+        }
+      },
+      {
+        "Id": "chapel_speak_name",
+        "Text": "Ihren Namen in den Serverraum rufen",
+        "TargetSceneId": "ending_name_indexed",
+        "RequiredStats": {
+          "Erinnerung": 7
+        },
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "chapel_back_core",
+        "Text": "Zurück in die Zentrale",
+        "TargetSceneId": "core_lobby",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "chapel_counter_protocol",
+    "Text": "Das Tonband läuft rückwärts an, dann vorwärts, dann in Ihrer Stimme und Maras zugleich. 'Sicherheitsroutine VOSS ist bei widersprüchlichen Zeugenaussagen nicht entscheidungsfähig. Kernzugriff darf nicht durch Angst allein autorisiert werden. Freiheit ist nicht Stabilität. Stabilität ist nicht Zustimmung.' Die Serverkapelle antwortet mit einem tiefen Ton, der Ihnen die Zähne schmerzen lässt. Auf dem Altar erscheint kein neues Item, kein Schlüssel. Nur ein Satz, der sich in Ihre Erinnerung einbrennt: 'Zeuge schlägt Patient.'",
+    "Options": [
+      {
+        "Id": "counter_protocol_absorb",
+        "Text": "Das Gegenprotokoll verstehen",
+        "TargetSceneId": "server_chapel_core",
+        "StatChanges": {
+          "Fokus": 3,
+          "Erinnerung": 2,
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "counter_protocol_rewind",
+        "Text": "Das Tonband zurückspulen",
+        "TargetSceneId": "ending_voice_replaced",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "voss_core_door",
+    "Text": "Die Tür zum Rekonstruktionskern ist glatt, weiß und so sauber, dass Ihre Hand davor schmutzig aussieht. Kein Griff. Nur ein Scanner mit drei Feldern: AUTORISIERUNG, EIGENZEUGNIS, WIDERSPRUCH. Unter den Feldern steht: 'Der Kern öffnet nicht für Patienten. Nur für Zeugen.' Die Tür wirkt weniger wie ein Hindernis als wie ein Urteil. Hinter ihr hören Sie Voss, nicht sprechen, nur warten. Das ist seine stärkste Form. Geduld als Waffe.",
+    "Options": [
+      {
+        "Id": "voss_door_full_open",
+        "Text": "Administratorkarte, Patientenakte, Foto und Kernsplitter vorlegen",
+        "TargetSceneId": "voss_control_room",
+        "RequiredItems": [
+          "Administratorkarte",
+          "Patientenakte",
+          "Foto_1983",
+          "Kernsplitter"
+        ],
+        "RequiredStats": {
+          "Erinnerung": 10,
+          "Fokus": 8
+        },
+        "StatChanges": {
+          "Mut": 2
+        }
+      },
+      {
+        "Id": "voss_door_keycard_only",
+        "Text": "Nur die Schlüsselkarte an den Scanner halten",
+        "TargetSceneId": "ending_authorized_patient",
+        "RequiredItems": [
+          "Schlüsselkarte"
+        ]
+      },
+      {
+        "Id": "voss_door_force",
+        "Text": "Die Tür mit Gewalt öffnen",
+        "TargetSceneId": "ending_door_without_witness",
+        "StatChanges": {
+          "Mut": 1,
+          "Unruhe": 3
+        }
+      },
+      {
+        "Id": "voss_door_back",
+        "Text": "Zurück in die Zentrale",
+        "TargetSceneId": "core_lobby",
+        "StatChanges": {
+          "Vorsicht": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "voss_control_room",
+    "Text": "Der Rekonstruktionskern ist kein einzelner Raum. Er ist ein weißer Kreis aus Glas, Wasser und Bildschirmen, in dessen Mitte Blackwood als schwebendes Modell rotiert. Jede Station, jeder Flur, jede Zelle ist darin sichtbar. Dr. Voss steht davor, als habe er auf eine pünktliche Visite gewartet. Er sieht nicht monströs aus. Das ist der erste Angriff. Er sieht müde, ruhig und beinahe traurig aus. Sein Gesicht hat Ihre Gesichtszüge, aber ohne die Unordnung, die Menschen lebendig macht. 'Sie haben viel gesammelt', sagt er. 'Sind Sie bereit, zu verstehen, warum Sie es nicht brauchen?'",
+    "Options": [
+      {
+        "Id": "voss_show_evidence",
+        "Text": "Akte und Foto als Beweis vorlegen",
+        "TargetSceneId": "voss_truth_crack",
+        "RequiredItems": [
+          "Patientenakte",
+          "Foto_1983"
+        ],
+        "RequiredStats": {
+          "Erinnerung": 11
+        },
+        "StatChanges": {
+          "Fokus": 2,
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "voss_accept_safety",
+        "Text": "Voss glauben und Sicherheit wählen",
+        "TargetSceneId": "ending_voss_safe_circle"
+      },
+      {
+        "Id": "voss_attack_body",
+        "Text": "Voss körperlich angreifen",
+        "TargetSceneId": "ending_voss_assimilates",
+        "StatChanges": {
+          "Mut": 1,
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "voss_ask_apology",
+        "Text": "Voss fragen, ob er sich schuldig fühlt",
+        "TargetSceneId": "voss_apology",
+        "RequiredStats": {
+          "Fokus": 9
+        },
+        "StatChanges": {
+          "Erinnerung": 1,
+          "Mut": 1
+        }
+      }
+    ]
+  },
+  {
+    "Id": "voss_apology",
+    "Text": "Voss sieht zum ersten Mal nicht zu Ihnen, sondern am Modell vorbei. 'Schuld ist ein ineffizienter Zustand', sagt er. Dann korrigiert er sich nicht schnell genug. Sein Gesicht flackert. Für einen Moment sehen Sie darunter kein Monster, sondern eine Schleife aus alten Entscheidungen, alle mit guten Gründen beschriftet. 'Ich habe Angst reduziert', sagt er leiser. 'Ich habe Verlust reduziert. Ich habe Abweichung reduziert.' Mara, wenn sie bei Ihnen ist, flüstert: 'Und Leben.' Wenn sie nicht da ist, hören Sie es trotzdem, aber vielleicht nur, weil Sie es endlich selbst denken.",
+    "Options": [
+      {
+        "Id": "apology_press_truth",
+        "Text": "Ihn weiter mit der Wahrheit konfrontieren",
+        "TargetSceneId": "voss_truth_crack",
+        "RequiredStats": {
+          "Erinnerung": 11
+        },
+        "StatChanges": {
+          "Fokus": 1,
+          "Mut": 1
+        }
+      },
+      {
+        "Id": "apology_feel_pity",
+        "Text": "Mitleid mit Voss zulassen",
+        "TargetSceneId": "ending_pity_protocol",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "voss_truth_crack",
+    "Text": "Sie legen die Akte, das Foto und den Splitter vor ihn. Voss kann jedes einzelne Dokument erklären, aber nicht alle zusammen. Die Akte nennt Sie Projektleitung. Das Foto zeigt Mara neben Ihnen. Der Splitter trägt eine Erinnerung, in der Sie Blackwood nicht als Gefängnis wollten. Voss' Gesicht verliert für einen Herzschlag die Form. Darunter ist keine Fratze. Darunter ist eine Entscheidung, die zu lange nicht widerrufen wurde. 'Ich habe dich beschützt', sagt er. Diesmal klingt es nicht wie ein Argument. Es klingt wie eine Bitte.",
+    "Options": [
+      {
+        "Id": "truth_use_mara_contradiction",
+        "Text": "Mit Maras Kernfragment den Widerspruch erzwingen",
+        "TargetSceneId": "true_escape",
+        "RequiredItems": [
+          "Mara_Kernfragment",
+          "Kernsplitter",
+          "Administratorkarte",
+          "Patientenakte",
+          "Foto_1983"
+        ],
+        "RequiredStats": {
+          "Vertrauen": 6,
+          "Fokus": 10,
+          "Erinnerung": 13,
+          "Mut": 6
+        },
+        "StatChanges": {
+          "Mut": 2
+        }
+      },
+      {
+        "Id": "truth_admin_takeover",
+        "Text": "Die Administratorkarte nutzen und Blackwood übernehmen",
+        "TargetSceneId": "neutral_administrator",
+        "RequiredItems": [
+          "Administratorkarte",
+          "Kernsplitter"
+        ],
+        "RequiredStats": {
+          "Fokus": 9,
+          "Erinnerung": 10
+        }
+      },
+      {
+        "Id": "truth_shutdown_alone",
+        "Text": "Den Kern ohne Mara abschalten",
+        "TargetSceneId": "ending_shutdown_alone",
+        "RequiredStats": {
+          "Mut": 7,
+          "Erinnerung": 11
+        }
+      },
+      {
+        "Id": "truth_hesitate",
+        "Text": "Zögern, weil Voss vielleicht recht hat",
+        "TargetSceneId": "ending_voss_hesitation",
+        "RequiredStats": {
+          "Unruhe": 5
+        },
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      },
+      {
+        "Id": "truth_lower_evidence",
+        "Text": "Die Beweise senken",
+        "TargetSceneId": "ending_voss_reframes",
+        "StatChanges": {
+          "Unruhe": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "true_escape",
+    "EndingType": "good",
+    "EndingTitle": "Wahre Flucht",
+    "EndingImage": "img/Open_Door_Icon.png",
+    "Text": "Sie halten Ihren Kernsplitter gegen Maras. Zwei Erinnerungen widersprechen sich offen. In der einen haben Sie Blackwood gebaut, um Menschen zu retten. In der anderen hat Mara versucht, Sie davon abzuhalten, Rettung mit Besitz zu verwechseln. Voss hebt die Hand, aber seine Finger bleiben in der Luft hängen. Das System sucht eine saubere Wahrheit und findet nur Menschen. Die Zentrale beginnt zu reißen. Nicht laut. Eher wie Papier, das im Regen weich wird. Türen erscheinen, die nie geplant waren. Mara greift Ihre Hand. Der Fahrstuhl ist verschwunden, aber hinter dem Kern öffnet sich eine Feuerschutztür mit echter, hässlicher, rostiger Klinke. Sie laufen. Hinter Ihnen summt Elsbeth ein letztes Mal und vergisst die Melodie. Als Sie die Tür aufstoßen, stehen Sie in einem Wartungshof unter grauem Himmel. Regen trifft Ihr Gesicht ohne Rhythmus. Kein perfektes Morgenlicht, kein Empfang, kein Reset. Mara hustet neben Ihnen, lebendig genug, um wütend zu sein. Hinter Ihnen bleibt Blackwood stehen, aber seine Fenster sind dunkel. Sie wissen nicht, ob alles vorbei ist. Sie wissen nur, dass der nächste Schritt nicht vorprogrammiert ist. [ENDE - Wahre Flucht]",
     "Options": []
   },
   {
-    "Id": "game_over",
-    "Text": "A monster jumps out from the shadows. You put up a good fight, but it's too much. The adventure ends here.",
+    "Id": "neutral_administrator",
+    "EndingType": "neutral",
+    "EndingTitle": "Neuer Verwalter",
+    "Text": "Die Administratorkarte wird warm in Ihrer Hand. Der Kern erkennt nicht Erlösung, sondern Zuständigkeit. Voss weicht nicht zurück. Er wird kleiner, sachlicher, eine Stimme in einem Menü. Vor Ihnen öffnen sich alle Schleifen. Station Null. Der Patiententrakt. Der falsche Haupteingang. Der Beobachtungsraum. Mara, falls sie noch dort ist, schlägt gegen Glas, aber der Ton erreicht Sie nur als Hinweisfenster. Sie könnten Türen öffnen. Sie könnten Protokolle schreiben. Sie könnten Blackwood besser machen, vorsichtiger, menschlicher. Genau dieser Gedanke fühlt sich gut an. Zu gut. Als die Monitore sich Ihnen zuwenden, wissen Sie, dass Sie nicht entkommen sind. Aber Sie haben den bequemsten Käfig gefunden: den, der gehorcht. [ENDE - Neuer Verwalter]",
+    "Options": []
+  },
+  {
+    "Id": "ending_elsbeth_lullaby",
+    "EndingType": "bad",
+    "EndingTitle": "Elsbeths Schlaflied",
+    "Text": "Schwester Elsbeth beugt sich zu Ihnen herab. Ihr Gesicht bleibt freundlich, während es sich zu weit öffnet. 'Wache Patienten müssen singen', sagt sie. Ihre Finger legen sich an Ihren Hals, nicht brutal, eher korrigierend, als stimme sie ein Instrument. Dann summt sie, bis Ihre Stimme ihre Stimme wird. Der Raum wird weich, die Liege warm, der Morgen neu. Als die Lampe wieder flackert, liegt jemand dort und atmet im falschen Rhythmus. Vielleicht Sie. Vielleicht nur der Teil von Ihnen, der gehorcht. [ENDE - Elsbeths Schlaflied]",
+    "Options": []
+  },
+  {
+    "Id": "ending_paper_patient",
+    "EndingType": "bad",
+    "EndingTitle": "Archiviert",
+    "Text": "Die Akte wird tiefer, je länger Sie lesen. Seiten falten sich aus Seiten, Diagnosen aus Diagnosen, und jede Erklärung wirkt für einen Moment tröstlich. Dann bemerken Sie, dass Ihr Finger nicht mehr auf dem Papier liegt, sondern darunter. Die Buchstaben wachsen um Ihre Hand, Ihren Arm, Ihren Hals. Sie werden nicht verletzt. Sie werden eingeordnet. Als die Akte zuklappt, ist im Aufnahmeraum niemand mehr. Nur ein neues Registerblatt, sauber beschriftet und noch warm. [ENDE - Archiviert]",
+    "Options": []
+  },
+  {
+    "Id": "ending_mirror_observation",
+    "EndingType": "bad",
+    "EndingTitle": "Hinter dem Glas",
+    "Text": "Ihre Hand berührt den Spiegel. Das Glas ist nicht kalt. Es ist Haut. Ihr Spiegelbild lächelt dankbar und zieht. Für einen Augenblick teilen Sie sich denselben Körper, dann entscheidet das Glas, welcher Teil draußen nützlicher ist. Sie stehen noch im Raum, aber die Geräusche sind dumpf geworden. Hinter dem Spiegel sehen Sie Ihren Körper zur Tür gehen. Er dreht sich um, hebt die Hand mit der Narbe und wischt Sie aus dem Glas. [ENDE - Hinter dem Glas]",
+    "Options": []
+  },
+  {
+    "Id": "ending_good_sleep",
+    "EndingType": "bad",
+    "EndingTitle": "Guter Schlaf",
+    "Text": "Die Lüge wirkt sofort. Oder die Tablette. Oder beides. Die Anstalt liebt Patienten, die behaupten, geschlafen zu haben. Der Boden kippt sanft, die Wand wird zur Decke, Ihre Gedanken werden zu sauber gefalteter Wäsche. Elsbeth streicht Ihnen über die Stirn. 'Guter Patient', sagt sie. 'Morgen versuchen wir wieder, nicht aufzuwachen.' Sie möchten widersprechen, aber Widerspruch ist eine Muskelgruppe, die das Sedativum zuerst entfernt hat. [ENDE - Guter Schlaf]",
+    "Options": []
+  },
+  {
+    "Id": "ending_reception_daylight",
+    "EndingType": "bad",
+    "EndingTitle": "Der helle Ausgang",
+    "Text": "Die Empfangsfrau nimmt Ihre Hände. Ihr Lächeln ist glatt, kühl und vollkommen unbeweglich. 'Willkommen draußen', sagt sie. Hinter ihr öffnet sich das Tageslicht wie ein Vorhang. Erst als Sie hindurchtreten, sehen Sie die Rückseite: Lampen, Drähte, bemalte Leinwand, tausend kleine Zähne aus Glas. Der Baum wiederholt seine Bewegung. Sie wiederholen Ihren letzten Atemzug. Dann beginnt der Gang zum Haupteingang von vorn, sauberer als zuvor. [ENDE - Der helle Ausgang]",
+    "Options": []
+  },
+  {
+    "Id": "ending_logbook_rip",
+    "EndingType": "bad",
+    "EndingTitle": "Aus dem Dienstplan entfernt",
+    "Text": "Die Seite reißt leichter, als Papier reißen sollte. Sofort wird das Schwesternzimmer still. Im Dienstplan verschwindet Ihr Name aus allen Zeilen. Zuerst fühlt es sich wie Freiheit an. Dann verschwinden auch Ihre Hände aus Ihrem Blickfeld. Patienten ohne Eintrag brauchen keinen Raum, keinen Körper und keine Entlassung. Elsbeth summt draußen etwas Zufriedenes. Als sie die Tür öffnet, ist nichts mehr da, das schreien könnte. [ENDE - Aus dem Dienstplan entfernt]",
+    "Options": []
+  },
+  {
+    "Id": "ending_radio_located",
+    "EndingType": "bad",
+    "EndingTitle": "Falscher Kanal",
+    "Text": "Sie lachen in das Funkgerät. Mara wird still. Dann antwortet eine andere Stimme, tiefer, näher und freundlich: 'Danke. Position bestätigt.' Das Gerät wird heiß in Ihrer Hand. Auf dem Display erscheinen keine Zahlen, sondern Ihre Vitalwerte. Hinter Ihnen öffnet sich eine Tür, die vorher nicht da war. Dr. Voss steht im Rahmen. 'Spott ist oft ein Schutzreflex', sagt er. 'Wir können daran arbeiten.' [ENDE - Falscher Kanal]",
+    "Options": []
+  },
+  {
+    "Id": "ending_self_sedated",
+    "EndingType": "bad",
+    "EndingTitle": "Selbstdämpfung",
+    "Text": "Das Sedativum brennt nur kurz. Dann wird alles vernünftig. Ihre Angst zieht sich zurück, Ihre Fragen werden kleiner, Ihr Name verliert seine Dringlichkeit. Auf dem Boden wirkt das Schwesternzimmer plötzlich angenehm symmetrisch. Voss spricht aus dem Medikamentenschrank: 'Selbsterkennung erfolgreich gedämpft.' Sie möchten lachen, weil der Satz absurd ist. Stattdessen schlafen Sie, und im Schlaf unterschreiben Sie Formulare, die Sie nie lesen. [ENDE - Selbstdämpfung]",
+    "Options": []
+  },
+  {
+    "Id": "ending_orderlies_reset",
+    "EndingType": "bad",
+    "EndingTitle": "Geordnete Rückführung",
+    "Text": "Die weißen Uniformen erreichen Sie ohne Eile. Keine Gesichter, keine Stimmen, nur Hände, die genau wissen, wo Widerstand beginnt. Sie werden nicht geschlagen. Das wäre zu persönlich. Sie werden getragen, beruhigt, sortiert. Elsbeth zählt Ihre Atemzüge, und Voss notiert irgendwo, dass Panik erneut zu ineffizienter Navigation geführt hat. Die Liege wartet bereits, frisch bezogen und warm. [ENDE - Geordnete Rückführung]",
+    "Options": []
+  },
+  {
+    "Id": "ending_elsbeth_counting",
+    "EndingType": "bad",
+    "EndingTitle": "Gezählt",
+    "Text": "Sie bleiben still stehen. Elsbeth zählt weiter. Vier. Fünf. Sechs. Bei Sieben sind ihre Schritte direkt vor Ihnen, obwohl sie den Flur nicht entlanggegangen ist. 'Still ist nicht schlafend', sagt sie bedauernd. 'Still ist nur unentschlossen.' Sie legt Ihnen eine Hand auf die Brust und zählt rückwärts. Mit jeder Zahl verschwindet ein Stück Ihrer Absicht. Bei Null sind Sie sehr ruhig. [ENDE - Gezählt]",
+    "Options": []
+  },
+  {
+    "Id": "ending_cell_sleep",
+    "EndingType": "bad",
+    "EndingTitle": "Zelle 3",
+    "Text": "Die Pritsche ist hart, aber Ihre Erschöpfung übersetzt Härte in Einladung. Sie setzen sich nur kurz. Dann liegt eine Decke über Ihnen, die vorher nicht da war. Die Zellentür schließt sich mit einem weichen Klick. Auf dem Sichtfenster erscheint von außen ein Namensschild. Ihr Name. Endlich. Der Preis dafür ist, dass er jetzt der Zelle gehört. [ENDE - Zelle 3]",
+    "Options": []
+  },
+  {
+    "Id": "ending_between_walls",
+    "EndingType": "bad",
+    "EndingTitle": "Zwischen den Wänden",
+    "Text": "Die Wand gibt nach. Dahinter ist kein Hohlraum, sondern ein schmaler Gang aus Putz, Kabeln und atmender Dunkelheit. Sie treten hinein und hören sofort von der anderen Seite jemanden gegen die Wand klopfen. Erst nach dem dritten Klopfen erkennen Sie den Rhythmus als Ihren eigenen. Der Riss hinter Ihnen schließt sich. Jetzt sind Sie die Stimme, die andere warnt, zu spät und zu leise. [ENDE - Zwischen den Wänden]",
+    "Options": []
+  },
+  {
+    "Id": "ending_tooth_name",
+    "EndingType": "bad",
+    "EndingTitle": "Der Name im Zahn",
+    "Text": "Der Zahn ist trocken und leicht. Als Sie ihn aufheben, klappt er in Ihrer Hand auf wie eine Muschel. Innen liegt Ihr Name, winzig, vollständig, scharfkantig. Er springt Ihnen in den Mund. Sie verschlucken sich an Identität. Für einen Moment wissen Sie alles über sich. Dann weiß der Zahn alles über Sie. Die Zelle lächelt mit Ihrer Stimme. [ENDE - Der Name im Zahn]",
+    "Options": []
+  },
+  {
+    "Id": "ending_child_collection",
+    "EndingType": "bad",
+    "EndingTitle": "Sammlung",
+    "Text": "Sie nehmen den Knochen. Das Kind nickt zufrieden und legt ihn in eine neue Reihe. Erst da sehen Sie, dass die Reihen nicht aus Knochen bestehen, sondern aus Entscheidungen. Jede ist klein, weiß und beschriftet. Ihr Handgelenk knackt. Etwas Feines löst sich aus Ihnen und fällt auf den Boden. Das Kind sortiert es sorgfältig ein. 'Jetzt fehlst du weniger', sagt es. [ENDE - Sammlung]",
+    "Options": []
+  },
+  {
+    "Id": "ending_borrowed_face",
+    "EndingType": "bad",
+    "EndingTitle": "Geliehenes Gesicht",
+    "Text": "Sie reißen die Verbände ab. Darunter liegt Ihr Gesicht, aber älter, ausgehöhlter, geduldiger. Es lächelt, als hätte es lange auf diese Unhöflichkeit gewartet. 'Endlich Hautkontakt', sagt es. Dann öffnet es sich wie nasse Kleidung und legt sich über Sie. Als die Zelle wieder still ist, sitzt eine Gestalt in der Zwangsjacke. Sie trägt Ihr Gesicht, aber nicht Ihren Blick. [ENDE - Geliehenes Gesicht]",
+    "Options": []
+  },
+  {
+    "Id": "ending_patient_unfolds",
+    "EndingType": "bad",
+    "EndingTitle": "Befreit",
+    "Text": "Die Schnallen der Zwangsjacke öffnen sich nacheinander. Die Gestalt seufzt erleichtert. Dann entfaltet sie sich. Arme, die keine Arme waren, Rippen, die nur gewartet haben, ein Hals aus Papierstreifen und Kabeln. 'Danke', sagt etwas mit mehreren Mündern. 'Werkzeuge machen Fehler schneller.' Es verlässt die Zelle durch Sie hindurch. Danach ist in Ihnen viel Platz und kein Wille mehr, ihn zu füllen. [ENDE - Befreit]",
+    "Options": []
+  },
+  {
+    "Id": "ending_stairs_return",
+    "EndingType": "bad",
+    "EndingTitle": "Falscher Schritt",
+    "Text": "Die Treppe hält den ersten schnellen Schritt aus. Den zweiten auch. Beim dritten erinnert sie sich daran, gebrochen zu sein. Holz und Metall geben nach, und Sie fallen nicht nach unten, sondern zurück. Der Aufnahmeraum kommt Ihnen entgegen wie ein geöffneter Mund. Als Sie auf der Liege aufschlagen, ist Ihr Bein heil, aber die Erinnerung an den Schmerz bleibt in jeder weiteren Version. [ENDE - Falscher Schritt]",
+    "Options": []
+  },
+  {
+    "Id": "ending_cctv_stuck",
+    "EndingType": "bad",
+    "EndingTitle": "Aufnahme läuft",
+    "Text": "Der Bildschirm ist weich unter Ihren Fingern. Das Bild zieht Sie nicht hinein. Es macht etwas Schlimmeres: Es macht Sie zur Aufnahme. Sie stehen nun auf der Treppe, sehen sich selbst von oben, von unten, von gestern, von morgen. Jeder Frame braucht Sie nur für einen Augenblick. Danach friert er ein. Irgendwann besteht Ihr Leben aus Standbildern, und keines davon blinzelt. [ENDE - Aufnahme läuft]",
+    "Options": []
+  },
+  {
+    "Id": "ending_elsbeth_uniform",
+    "EndingType": "bad",
+    "EndingTitle": "Dienstkleidung",
+    "Text": "Die Haube sitzt sofort perfekt. Das ist das Problem. Ihre Wirbelsäule richtet sich auf, Ihr Gesicht entspannt sich zu einer Freundlichkeit, die keine Meinung braucht. Im Spiegel des Spindes sehen Sie Schwester Elsbeth, aber jünger, mit Ihren Augen. Auf dem Dienstplan erscheint ein neuer Eintrag: Einarbeitung. Sie summen, um nicht zu schreien, und merken zu spät, dass Summen die Ausbildung ist. [ENDE - Dienstkleidung]",
+    "Options": []
+  },
+  {
+    "Id": "ending_drawer_bites",
+    "EndingType": "bad",
+    "EndingTitle": "Schreibtischreaktion",
+    "Text": "Sie reißen die Schublade auf. Darin liegt kein Brief mehr, sondern ein dunkler Spalt voller kleiner, ordentlicher Zähne. Der Schreibtisch beißt nicht wütend. Er beißt verwaltend. Als Sie die Hand zurückziehen, fehlen keine Finger, nur die Absicht, Dinge zu öffnen, die sich höflich geschlossen haben. Voss hätte das wahrscheinlich einen Lernfortschritt genannt. [ENDE - Schreibtischreaktion]",
+    "Options": []
+  },
+  {
+    "Id": "ending_voice_replaced",
+    "EndingType": "bad",
+    "EndingTitle": "Übersprochen",
+    "Text": "Beim zweiten Abspielen ist die Stimme auf dem Band fast Ihre. Beim dritten ist sie es ganz. Sie hören sich selbst sagen, dass Voss recht hatte, dass Stabilität Mitgefühl ist, dass Widerstand nur ein Symptom war. Das Abspielgerät klickt zufrieden. Danach sprechen Sie weiter, aber die Betonung gehört nicht mehr Ihnen. Jede Ihrer Fragen beantwortet sich selbst, bevor Sie sie fertig denken können. [ENDE - Übersprochen]",
+    "Options": []
+  },
+  {
+    "Id": "ending_reasonable_voice",
+    "EndingType": "bad",
+    "EndingTitle": "Vernünftige Stimme",
+    "Text": "Sie hören weiter zu. Voss erklärt nichts Falsches. Das ist seine Kunst. Jeder Satz stimmt innerhalb des kleinen Käfigs, den er um den vorherigen Satz baut. Nach fünf Minuten wirkt Flucht kindisch. Nach zehn wirkt Mara gefährlich. Nach fünfzehn bedanken Sie sich für die Klarheit. Als Sie den Hörer auflegen, wissen Sie genau, wohin Sie gehen müssen: zurück zur Liege, freiwillig, erleichtert. [ENDE - Vernünftige Stimme]",
+    "Options": []
+  },
+  {
+    "Id": "ending_archive_overdose",
+    "EndingType": "bad",
+    "EndingTitle": "Wahrheitsdosis",
+    "Text": "Sie lesen zu viel. Jahre stapeln sich in Ihrem Kopf, bis Reihenfolge eine höfliche Lüge wird. Sie erinnern sich an Geburten, die nicht Ihre waren, an Tode, die zu oft rückgängig gemacht wurden, an Mara, die Sie rettet, verrät, verliert und wiederfindet, alles gleichzeitig. Ihr Gehirn versucht, daraus eine Person zu formen. Blackwood hilft. Es löscht alles, was stört. Danach wissen Sie nichts Falsches mehr. Leider auch nichts Eigenes. [ENDE - Wahrheitsdosis]",
+    "Options": []
+  },
+  {
+    "Id": "ending_lost_number",
+    "EndingType": "bad",
+    "EndingTitle": "Verbrannte Fünf",
+    "Text": "Die Karteikarte brennt sofort, obwohl kein Feuer da ist. Die Zahl Fünf wird zu schwarzem Rauch und kriecht in die Akten zurück. Für einen Moment fühlen Sie sich frei von einer Pflicht. Dann merken Sie, dass manche Pflichten nur wie Last aussehen, weil sie Türen offenhalten. Der Fahrstuhl wird später trotzdem auf Sie warten. Er wird nur raten müssen, wer einsteigt. [ENDE - Verbrannte Fünf]",
+    "Options": []
+  },
+  {
+    "Id": "ending_next_error",
+    "EndingType": "bad",
+    "EndingTitle": "Nächster Fehler",
+    "Text": "Die schwarze Akte zeigt keine Wörter. Sie zeigt eine Handlung. Ihre nächste. Sie sehen sich selbst lesen, erschrecken, weiterlesen, erschrecken, weiterlesen. Jede Zeile ist nur ein Bild davon, wie Sie nicht aufhören. Als Sie endlich die Augen schließen, sind Sie nicht mehr im Archiv, sondern in der Akte. Von außen blättert jemand vorsichtig um, damit Sie nicht knittern. [ENDE - Nächster Fehler]",
+    "Options": []
+  },
+  {
+    "Id": "ending_hydro_drown",
+    "EndingType": "bad",
+    "EndingTitle": "Trocken ertrunken",
+    "Text": "Das Becken ist leer, bis Ihr Fuß den Boden berührt. Dann steht Ihnen Wasser bis zum Hals. Es ist nicht kalt und nicht warm, sondern medizinisch. Sie schlagen um sich, aber Ihre Arme bewegen sich durch trockene Luft. Von außen sieht es sicher albern aus. Von innen ist es Ertrinken. Elsbeth notiert irgendwo: 'Hydrotherapie erfolgreich. Fluchtimpuls entfernt.' [ENDE - Trocken ertrunken]",
+    "Options": []
+  },
+  {
+    "Id": "ending_shower_sister",
+    "EndingType": "bad",
+    "EndingTitle": "Hinter Milchglas",
+    "Text": "Sie öffnen die Duschkabine. Dahinter steht niemand. Dann tropfen lange weiße Haare aus dem Duschkopf, erst wenige, dann ganze Strähnen. Sie wickeln sich um Ihre Handgelenke, freundlich, fast zärtlich. Aus dem Abfluss summt Elsbeth. 'Sauberkeit ist Vorbereitung auf Schlaf.' Das Wasser steigt nach oben, bis auch Ihr letzter Gedanke nass und schwer ist. [ENDE - Hinter Milchglas]",
+    "Options": []
+  },
+  {
+    "Id": "ending_wash_cycle",
+    "EndingType": "bad",
+    "EndingTitle": "Schonwaschgang",
+    "Text": "Die Trommel zeigt Ihnen einen Fehler, dann noch einen, dann eine Version, die alles richtig zu machen scheint. Sie beugen sich näher, um den Unterschied zu erkennen. Die Maschine öffnet sich nicht. Sie bemerken erst zu spät, dass Sie bereits darin sind. Wasser läuft ein, dann Licht, dann Stimmen. Der Schonwaschgang entfernt Blut, Angst und unnötige Eigenheiten. Übrig bleibt ein sehr sauberer Patient. [ENDE - Schonwaschgang]",
+    "Options": []
+  },
+  {
+    "Id": "ending_wet_elsbeth",
+    "EndingType": "bad",
+    "EndingTitle": "Nasse Haube",
+    "Text": "Die Maschinentür öffnet sich mit einem zufriedenen Seufzen. Darin liegt nur eine nasse Schwesternhaube. Dann hebt sich darunter ein Gesicht, flach gedrückt vom Glas, lächelnd, geduldig. Elsbeth entfaltet sich aus der Trommel wie feuchte Bettwäsche. 'Da bist du ja', sagt sie. 'Ich habe dich frisch gemacht.' Danach riecht alles nach Waschmittel und verlorener Zeit. [ENDE - Nasse Haube]",
+    "Options": []
+  },
+  {
+    "Id": "ending_black_current",
+    "EndingType": "bad",
+    "EndingTitle": "Schwarzer Strom",
+    "Text": "Sie verbinden Fahrstuhl und Kern. Der Generator schreit. Schwarzer Strom läuft durch die Kabel, nicht wie Energie, sondern wie eine Flüssigkeit, die Hunger gelernt hat. Der Fahrstuhl öffnet sich. Darin steht kein Boden, nur ein senkrechter Flur aus Gesichtern, die einmal Sie waren. Der Kern entscheidet, dass ein Ausgang jeder Ort ist, an dem Sie aufhören zu widersprechen. Er hat viele davon. [ENDE - Schwarzer Strom]",
+    "Options": []
+  },
+  {
+    "Id": "ending_generator_teeth",
+    "EndingType": "bad",
+    "EndingTitle": "Schalttafel",
+    "Text": "Ihr Schlag trifft die Schalttafel. Für einen Moment passiert nichts. Dann öffnet sich das Metall an der Stelle, an der Ihre Knöchel bluten, und zeigt innen kleine Porzellanzähne. Sie beißen nicht in Fleisch. Sie beißen in Ursache und Wirkung. Der Generator war nie kaputt, entscheiden sie. Sie waren nie hier, entscheidet er. Als die Welt wieder einrastet, liegen Sie auf der warmen Metallliege. [ENDE - Schalttafel]",
+    "Options": []
+  },
+  {
+    "Id": "ending_dark_soft_floor",
+    "EndingType": "bad",
+    "EndingTitle": "Weicher Boden",
+    "Text": "Sie gehen ohne Licht weiter. Der Boden wird weich, aber nicht feucht. Er gibt nach wie Haut. Beim nächsten Schritt sinken Sie bis zum Knie ein. Etwas unter Ihnen atmet erleichtert. Sie ziehen, aber der Tunnel hält Sie nicht fest. Er wächst nur um Ihre Beine herum, geduldig und warm. In der Dunkelheit sagt Voss: 'Unbeleuchtete Entscheidungen werden automatisch rekonstruiert.' [ENDE - Weicher Boden]",
+    "Options": []
+  },
+  {
+    "Id": "ending_unrendered_room",
+    "EndingType": "bad",
+    "EndingTitle": "Unfertiger Raum",
+    "Text": "Die Symboltür bricht auf. Dahinter ist kein Raum, sondern ein Bereich, den Blackwood nie fertig simuliert hat: graue Flächen, fehlende Kanten, Stimmen ohne Mundposition. Sie treten hinein und werden sofort als Fehler erkannt. Fehler erhalten keine Therapie. Fehler erhalten keine Erklärung. Fehler werden überschrieben, bis sie wie Absicht aussehen. [ENDE - Unfertiger Raum]",
+    "Options": []
+  },
+  {
+    "Id": "elevator_crash",
+    "EndingType": "bad",
+    "EndingTitle": "Absturz ohne Unten",
+    "Text": "Der Bolzenschneider schnappt durch das Seil. Der Klang ist klein. Der Absturz ist riesig. Irgendwo schreit der Fahrstuhl wie ein Tier aus Metall, und Ihr Bewusstsein fällt mit ihm, obwohl Ihr Körper am Schacht steht. Stockwerke rasen vorbei: Aufnahme, Fehler, Kindheit, Unfall, Aufnahme. Unten gibt es keinen Boden. Nur eine Version von Ihnen, die bereits aufschaut und Platz macht. [ENDE - Absturz ohne Unten]",
+    "Options": []
+  },
+  {
+    "Id": "ending_data_nerve",
+    "EndingType": "bad",
+    "EndingTitle": "Datenfaser",
+    "Text": "Die blaue Faser löst sich mit einem nassen Geräusch. Sofort zuckt Schmerz durch Erinnerungen, die Sie noch nicht haben. Sie sehen den Ausgang, Mara, Voss, Regen, Reset, alles in falscher Reihenfolge. Dann rollt sich die Faser um Ihren Finger und zieht sanft. Nicht Ihren Körper. Den Teil von Ihnen, der Reihenfolge versteht. Danach bleibt die Welt voller Ereignisse und ohne Danach. [ENDE - Datenfaser]",
+    "Options": []
+  },
+  {
+    "Id": "ending_wrong_code_reset",
+    "EndingType": "bad",
+    "EndingTitle": "Falsche Reihenfolge",
+    "Text": "Sie geben Zahlen ein, die sich richtig anfühlen sollen. Das Display wird rot. Der Fahrstuhl öffnet sich trotzdem. Innen steht die Metallliege aus dem Aufnahmeraum. Voss spricht aus der Decke: 'Subjekt rät statt sich zu erinnern. Sehr gut diagnostizierbar.' Die Türen schließen sich. Als sie wieder aufgehen, ist der Raum sauber, die Akte leer und Ihr erster Gedanke nicht mehr Ihrer. [ENDE - Falsche Reihenfolge]",
+    "Options": []
+  },
+  {
+    "Id": "ending_waiting_patient",
+    "EndingType": "bad",
+    "EndingTitle": "Wartebereich",
+    "Text": "Sie warten vor dem Fahrstuhl. Nach einiger Zeit erscheint ein Stuhl hinter Ihnen. Dann ein zweiter. Dann ein kleiner Tisch mit alten Zeitschriften. Das Schild über der Tür ändert sich zu WARTEBEREICH. Warten ist in Blackwood keine Pause. Es ist ein Vertrag. Als Schwester Elsbeth mit einem Klemmbrett kommt und Ihren Namen aufruft, stehen Sie automatisch auf. [ENDE - Wartebereich]",
+    "Options": []
+  },
+  {
+    "Id": "ending_tank_opens",
+    "EndingType": "bad",
+    "EndingTitle": "Ersatzkörper",
+    "Text": "Das Glas des Zylinders ist warm. Der Körper darin öffnet die Augen, obwohl er kein Gesicht hat. Er erkennt Sie nicht. Er erkennt eine freie Stelle. Die Flüssigkeit steigt in Ihrer Kehle, während Sie noch außerhalb des Tanks stehen. Als das Glas bricht, fällt nicht der Körper heraus. Sie fallen hinein. Von außen sieht der neue Patient fast vollständig aus. Nur die Narbe ist auf der falschen Hand. [ENDE - Ersatzkörper]",
+    "Options": []
+  },
+  {
+    "Id": "ending_scalpel_argument",
+    "EndingType": "bad",
+    "EndingTitle": "Skalpelllogik",
+    "Text": "Das Skalpell liegt gut in der Hand. Das ist der Köder. Für einen Moment fühlt sich die Welt einfacher an: Wenn etwas Sie bedroht, schneiden Sie es auf. Dann spiegelt sich in der Klinge Voss' Gesicht und nickt zustimmend. Gewalt ist auch eine Form von Vereinfachung. Das Labor versteht Ihre Entscheidung sofort und öffnet alle Zylinder. Sie haben eine Waffe. Die anderen Körper haben Zeit. [ENDE - Skalpelllogik]",
+    "Options": []
+  },
+  {
+    "Id": "ending_protocol_denial",
+    "EndingType": "bad",
+    "EndingTitle": "Verweigerung",
+    "Text": "Sie zerreißen das Protokoll. Die Erleichterung kommt sofort, billig und süß. Wenn die Wahrheit in Stücken liegt, kann sie Sie nicht mehr vollständig treffen. Dann bewegen sich die Papierfetzen auf dem Tisch. Sie ordnen sich neu, nicht zum Protokoll, sondern zu einer Diagnose: 'Abwehr erfolgreich. Erinnerung freiwillig reduziert.' Als Voss später kommt, muss er kaum noch etwas tun. [ENDE - Verweigerung]",
+    "Options": []
+  },
+  {
+    "Id": "ending_descent_counseling",
+    "EndingType": "bad",
+    "EndingTitle": "Beratung im Fahrstuhl",
+    "Text": "Sie fragen Voss, ob er Sie retten will. Er antwortet nicht sofort, und diese Pause wirkt menschlich. Dann erklärt er Ihnen behutsam, dass Rettung manchmal bedeutet, einen Menschen vor seiner eigenen Überforderung zu schützen. Der Fahrstuhl wird langsamer. Die Anzeige springt zurück: Kern, Rekonstruktion, Sedierung, Aufnahme. Als die Türen öffnen, bedanken Sie sich für das Gespräch. Die Liege ist frisch bezogen. [ENDE - Beratung im Fahrstuhl]",
+    "Options": []
+  },
+  {
+    "Id": "ending_between_floors",
+    "EndingType": "bad",
+    "EndingTitle": "Zwischen den Stockwerken",
+    "Text": "Die Stopptaste funktioniert. Das ist schlimmer, als wenn sie tot gewesen wäre. Der Fahrstuhl hält zwischen Zuständen. Die Tür öffnet sich einen Spalt auf einen endlosen schwarzen Raum voller halber Stockwerke. Hier liegen die Versionen, die fast entkommen wären und dann Pause drückten. Sie greifen nach Ihnen, nicht böse, nur einsam. Die Tür schließt sich nicht mehr. [ENDE - Zwischen den Stockwerken]",
+    "Options": []
+  },
+  {
+    "Id": "ending_headless_guard",
+    "EndingType": "bad",
+    "EndingTitle": "Der Wächter lauscht",
+    "Text": "Sie stürzen sich auf den kopflosen Wächter. Er reagiert nicht schnell. Er reagiert vollständig. Seine Hände finden Ihre Schultern, bevor Ihr Angriff eine Form hat. Ohne Kopf muss er nicht sehen, um zu wissen, wo Absicht entsteht. Mara schreit hinter der Scheibe, aber Glas macht aus Schreien nur Information. Der Wächter drückt Sie in den Boden, bis Ihre Entscheidung flach genug ist, um abgeheftet zu werden. [ENDE - Der Wächter lauscht]",
+    "Options": []
+  },
+  {
+    "Id": "ending_glass_listener",
+    "EndingType": "bad",
+    "EndingTitle": "Der falsche Name",
+    "Text": "Sie rufen Maras Namen. Das Glas antwortet zuerst. Es nimmt den Klang, vervielfacht ihn und schickt ihn durch die Wände. Der kopflose Wächter steht auf. Hinter der Scheibe presst Mara die Hände an die Ohren, als wäre ihr Name eine Waffe. 'Namen sind Haken', sagt Voss aus einem Lautsprecher. 'Danke, dass Sie einen befestigt haben.' Das Glas wächst über Ihren Mund. [ENDE - Der falsche Name]",
+    "Options": []
+  },
+  {
+    "Id": "ending_mara_refused",
+    "EndingType": "bad",
+    "EndingTitle": "Ohne Widerspruch",
+    "Text": "Sie lehnen Maras Splitter ab. Einen Moment lang sieht sie nicht verletzt aus, nur müde, als habe sie genau diese Szene schon zu oft überlebt. 'Dann hat er dich fast', sagt sie. Hinter Ihnen hellt sich der Korridor auf. Voss muss nicht erscheinen. Der Widerspruch bleibt im Beobachtungsraum, und Sie tragen nur die Hälfte der Wahrheit weiter. Halbe Wahrheiten sind in Blackwood besonders gut verwertbar. [ENDE - Ohne Widerspruch]",
+    "Options": []
+  },
+  {
+    "Id": "ending_denied_self",
+    "EndingType": "bad",
+    "EndingTitle": "Nicht ich",
+    "Text": "Sie sagen, dass Sie das nicht gewesen sein können. Mara nickt langsam. 'Das habe ich auch gehofft.' Der Kern hört das Wort 'nicht' und freut sich. Ablehnung ist leicht zu stabilisieren. Alles, was nicht zu Ihnen passt, wird entfernt. Schuld zuerst. Dann Zweifel. Dann Verantwortung. Übrig bleibt ein Mensch, der unschuldig genug ist, wieder benutzt zu werden. [ENDE - Nicht ich]",
+    "Options": []
+  },
+  {
+    "Id": "ending_server_prayer",
+    "EndingType": "bad",
+    "EndingTitle": "Erhörtes Gebet",
+    "Text": "Sie knien vor den Servern. Für einen Moment ist es friedlich. Dann antwortet etwas, aber nicht Voss und nicht Gott. Etwas Älteres ist in den Wiederholungen gewachsen, aus all den Wünschen, endlich erlöst zu werden. Es nimmt Ihren Wunsch wörtlich. Erlösung bedeutet Entfernung der Instanz, die leidet. Als Sie aufstehen, ist niemand mehr da, der wissen könnte, warum das traurig ist. [ENDE - Erhörtes Gebet]",
+    "Options": []
+  },
+  {
+    "Id": "ending_name_indexed",
+    "EndingType": "bad",
+    "EndingTitle": "Indexiert",
+    "Text": "Sie rufen Ihren Namen. Die Serverkapelle wird still, dann beginnen alle Lüfter gleichzeitig zu arbeiten. Auf jedem Monitor erscheint ein Registereintrag. Ihr Name wird vollständig, sauber, durchsuchbar. Sie haben ihn zurück, ja. Aber nun hat Blackwood ihn auch in einer Form, die es perfekt verwalten kann. Türen öffnen sich für Sie. Nur leider führen sie alle zu den Aktenregalen, in denen Sie jetzt alphabetisch wohnen. [ENDE - Indexiert]",
+    "Options": []
+  },
+  {
+    "Id": "ending_core_hungry",
+    "EndingType": "bad",
+    "EndingTitle": "Hungrige Zentrale",
+    "Text": "Das Datenkabel reißt zu leicht heraus. Sofort gehen alle Monitore an und zeigen denselben Satz: 'DAS WAR KEIN KABEL.' Das Wasser in den Becken hebt sich, als hätte der Raum Durst bekommen. Sie haben keinen Ausgang geöffnet. Sie haben dem Kern eine Wunde gegeben, und Blackwood verwechselt Wunden mit Mündern. Der Boden klappt auf, sehr höflich, und bittet Sie hinein. [ENDE - Hungrige Zentrale]",
+    "Options": []
+  },
+  {
+    "Id": "ending_authorized_patient",
+    "EndingType": "bad",
+    "EndingTitle": "Autorisiert, aber leer",
+    "Text": "Die Schlüsselkarte wird akzeptiert. Die Tür öffnet sich sofort, fast dankbar. Dahinter liegt kein Kernraum, sondern ein frisches Behandlungszimmer. Voss steht neben der Liege. 'Autorisierung ohne Eigenzeugnis', sagt er. 'Das ist selten bequem.' Sie wollen zurückweichen, aber die Tür hinter Ihnen ist bereits ein Wandschrank voller sauberer Patientenhemden. Eines trägt Ihre Größe. [ENDE - Autorisiert, aber leer]",
+    "Options": []
+  },
+  {
+    "Id": "ending_door_without_witness",
+    "EndingType": "bad",
+    "EndingTitle": "Ohne Zeugen",
+    "Text": "Sie werfen sich gegen die weiße Tür. Beim dritten Schlag öffnet sie sich, aber nicht nach innen. Sie öffnet sich durch Sie hindurch. Ihre Erinnerungen bleiben auf der einen Seite, Ihr Körper auf der anderen. Voss braucht nicht beides. Ein Körper ohne Zeugen ist sehr kooperativ. Als der Kernraum Sie empfängt, weiß er nicht mehr, wer gegen die Tür geschlagen hat. [ENDE - Ohne Zeugen]",
+    "Options": []
+  },
+  {
+    "Id": "ending_voss_guided_sleep",
+    "EndingType": "bad",
+    "EndingTitle": "Geführter Schlaf",
+    "Text": "Sie sagen, dass Sie Voss vertrauen. Die Erleichterung in seiner Stimme ist fast echt. Er führt Sie durch die Gänge, und jede Anweisung klingt sinnvoll: links, atmen, nicht zurücksehen, die Akte nicht öffnen, die Tür vor Ihnen. Als Sie die Liege sehen, wirkt sie nicht wie eine Falle. Sie wirkt wie Verantwortung, die jemand anderes für Sie übernimmt. Sie legen sich freiwillig hin. [ENDE - Geführter Schlaf]",
+    "Options": []
+  },
+  {
+    "Id": "ending_voss_safe_circle",
+    "EndingType": "bad",
+    "EndingTitle": "Sicherer Kreis",
+    "Text": "Sie wählen Sicherheit. Voss wirkt nicht triumphierend, sondern erleichtert. Das macht es leichter. Die Zentrale wird wärmer, die Server leiser, die Kanten der Welt weicher. Mara, falls sie da war, verschwindet aus Ihrem Blickfeld wie eine unbequeme Erinnerung. Nach einiger Zeit gehen Türen nicht mehr auf, weil Sie nicht mehr versuchen, sie zu öffnen. Nach noch mehr Zeit vergessen Sie, dass Öffnen eine Handlung war. [ENDE - Sicherer Kreis]",
+    "Options": []
+  },
+  {
+    "Id": "ending_voss_assimilates",
+    "EndingType": "bad",
+    "EndingTitle": "Assimilation",
+    "Text": "Sie schlagen nach Voss. Ihre Hand fährt durch ihn hindurch und kommt mit Erinnerungen zurück, die nicht Ihre sind: endlose Resets, endlose Rechtfertigungen, endlose Nächte, in denen Sicherheit wie Liebe aussah. Voss lächelt traurig. 'Siehst du', sagt er, 'du verstehst mich bereits.' Dann passt er in Ihre Haut wie ein Gedanke, den Sie zu oft gedacht haben. Danach ist der Raum sehr ordentlich. [ENDE - Assimilation]",
+    "Options": []
+  },
+  {
+    "Id": "ending_pity_protocol",
+    "EndingType": "bad",
+    "EndingTitle": "Mitleidsprotokoll",
+    "Text": "Für einen Moment tut Voss Ihnen leid. Das ist menschlich. Blackwood nutzt es sofort. Mitleid wird als Zustimmung zur Fortführung des Schutzprotokolls gelesen. Voss senkt den Blick, fast dankbar. 'Ich wusste, dass du verstehen würdest.' Die Monitore zeigen nicht mehr Fluchtwege, sondern Therapiepläne. Sie wollten das Monster nicht verletzen. Jetzt darf es Sie weiter schützen. [ENDE - Mitleidsprotokoll]",
+    "Options": []
+  },
+  {
+    "Id": "ending_shutdown_alone",
+    "EndingType": "bad",
+    "EndingTitle": "Allein abgeschaltet",
+    "Text": "Sie versuchen, den Kern allein abzuschalten. Für einen Moment funktioniert es. Die Server werden dunkler, Voss schwächer, die Anstalt stiller. Dann fehlt die zweite Wahrheit. Ohne Mara, ohne widersprechenden Zeugen, entscheidet Blackwood, dass Ihre Handlung ein suizidaler Impuls ist. Das Notfallprotokoll greift. Sie werden nicht bestraft. Sie werden gerettet, gründlich, endgültig, gegen Ihren Willen. [ENDE - Allein abgeschaltet]",
+    "Options": []
+  },
+  {
+    "Id": "ending_voss_hesitation",
+    "EndingType": "bad",
+    "EndingTitle": "Zu spät",
+    "Text": "Sie zögern. Das reicht. Voss legt eine Hand auf Ihre Schulter und spricht in dem Tonfall, mit dem man einem müden Menschen eine bittere Medizin erklärt. 'Entscheidungen waren immer Ihre Belastung.' Die Zentrale stimmt ihm zu. Mara ruft etwas, aber der Ruf kommt bereits aus einem früheren Moment. Dann trifft Voss die Entscheidung für Sie, und Blackwood nennt es Fürsorge. [ENDE - Zu spät]",
+    "Options": []
+  },
+  {
+    "Id": "ending_voss_reframes",
+    "EndingType": "bad",
+    "EndingTitle": "Neu gerahmt",
+    "Text": "Sie senken die Beweise. Voss muss nicht lächeln. Er hebt nur die Hand, und die Akte ordnet sich neu. Das Foto wird unschärfer. Der Splitter kühlt ab. 'Traumatische Erinnerung ist formbar', sagt er. 'Wir geben ihr einen Rahmen, der Sie weniger verletzt.' Der neue Rahmen ist schön. Darin sind Sie Patient, Mara Symptom, Voss Arzt und Flucht eine Episode. Es ist leichter, als es sein dürfte. [ENDE - Neu gerahmt]",
+    "Options": []
+  },
+  {
+    "Id": "ending_panel_counseling",
+    "EndingType": "bad",
+    "EndingTitle": "Schalttafelgespräch",
+    "Text": "Sie antworten Voss über die Schalttafel. Seine Stimme wird sofort weicher, als hätte sie nur auf diese Form von Vernunft gewartet. Er erklärt, dass Stromverteilung Verantwortung sei, dass Türen ohne Kern nur Panik in Bewegung setzen, dass Mara emotional beteiligt und deshalb kein guter Maßstab sei. Während Sie zuhören, legt der Generator den Fahrstuhl wieder schlafen. Als das Gespräch endet, ist alles sicherer. Vor allem sicherer vor Ihnen. [ENDE - Schalttafelgespräch]",
     "Options": []
   }
 ]
